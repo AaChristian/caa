@@ -1,0 +1,28 @@
+@import "partials/variables.scss";
+@import "partials/base.scss";
+@import "partials/navigation.scss";
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding-top: 20px;
+  color: white;
+  position: relative;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.Main-component-containter {
+    margin-top: 20px;
+    padding: 20px;
+}
