@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Maps from './components/Maps';
 import Navigation from './components/Navigation';
 import About from './components/About';
+import Footer from './components/Footer';
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
         </header>
         <About />
         <Maps />
+        <Footer />
       </div>
     );
   }

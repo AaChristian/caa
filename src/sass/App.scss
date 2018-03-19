@@ -26,3 +26,15 @@
     margin-top: 20px;
     padding: 20px;
 }
+
+.Map-list {
+    width: 300px;
+    float: left;
+    margin: 5px;
+    background-color: lightgray;
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}

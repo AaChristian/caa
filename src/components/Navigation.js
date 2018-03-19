@@ -5,9 +5,9 @@ class Navigation extends Component {
         return (
             <ul id="navbar">
 				<li><a href="#">Info</a></li>
-				<li><a href="#">Brukere</a></li>
-				<li><a href="#">Legg til bruker</a></li>
-				<li><a href="#">Planlegg</a></li>
+				<li><a href="#">Link 2</a></li>
+				<li><a href="#">Link 3</a></li>
+				<li><a href="#">Link 4</a></li>
 				<li className="dropdown">
 					<a href="javascript:void(0)" className="dropbtn">Testing</a>
 					<div className="dropdown-content">

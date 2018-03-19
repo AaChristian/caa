@@ -1,4 +1,9 @@
 /* line 1, ../sass/partials/_base.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 5, ../sass/partials/_base.scss */
 body {
   margin: 0;
   padding: 0;
@@ -101,4 +106,18 @@ li a:hover, .dropdown:hover .dropbtn {
 .Main-component-containter {
   margin-top: 20px;
   padding: 20px;
+}
+
+/* line 30, ../sass/App.scss */
+.Map-list {
+  width: 300px;
+  float: left;
+  margin: 5px;
+  background-color: lightgray;
+}
+/* line 35, ../sass/App.scss */
+.Map-list:after {
+  content: "";
+  display: table;
+  clear: both;
 }

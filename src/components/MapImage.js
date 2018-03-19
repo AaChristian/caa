@@ -22,7 +22,7 @@ class MapImage extends Component {
         return (
             <div className="Map-image">
                 {this.state.images.map(image =>
-                    <img key={image.location} src={"media/" + image.location} width="800px" height="540px" alt="Bilde her.." />
+                    <img key={image.location} src={"media/" + image.location} width="300px" height="180px" alt="Bilde her.." />
                 )}
             </div>
         );

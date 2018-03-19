@@ -21,14 +21,13 @@ class Maps extends Component {
         return (
             <div className="Maps">
             <h2>Maps</h2>
-            <ul>
+            <p>Over the course of many years I have made several maps for multiple games. Some of which are shown below.</p>
                 {this.state.maps.map(map =>
-                    <div>
-                    <li key={map.id}>{map.name}</li>
+                    <div className="Map-list">
+                    <p key={map.id}>{map.name}</p>
                     <MapImage mapId={map.id} />
                     </div>
                 )}
-            </ul>
             </div>
         );
     }
