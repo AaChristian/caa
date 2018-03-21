@@ -28,6 +28,7 @@ class Maps extends Component {
                     <MapImage mapId={map.id} />
                     </div>
                 )}
+                <div className="clear-fix"></div>
             </div>
         );
     }

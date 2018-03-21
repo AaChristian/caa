@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class Navigation extends Component {
     render() {
         return (
             <ul id="navbar">
-				<li><a href="#">Info</a></li>
-				<li><a href="#">Link 2</a></li>
+				<li><Link to="/">Hjem</Link></li>
+				<li><Link to="/router">Route test</Link></li>
 				<li><a href="#">Link 3</a></li>
 				<li><a href="#">Link 4</a></li>
 				<li className="dropdown">

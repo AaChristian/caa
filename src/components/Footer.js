@@ -4,7 +4,7 @@ class Footer extends Component {
     render() {
         return (
             <footer>
-                <p>Laget med React.js</p>
+                <p>Laget med Reac.js</p>
             </footer>
         );
     }

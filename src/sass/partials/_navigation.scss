@@ -4,12 +4,13 @@
     padding: 0;
     overflow: hidden;
     background-color: $dark-gray;
-	height: 46px;
-    position: absolute;
+	//height: 46px;
+    //position: absolute;
     bottom: 0;
     width: 100%;
     li {
         float:left;
+        display: block;
         a.active {
         	background-color: $green;
         	color: $white;
@@ -28,9 +29,10 @@ li a, .dropbtn {
     text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
+li:hover, .dropdown:hover .dropbtn {
     background-color: $light-gray;
     color: $black;
+    cursor: pointer;
 }
 
 // Dropdown content
@@ -55,4 +57,11 @@ li a:hover, .dropdown:hover .dropbtn {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+@media screen and (max-width: 600px) {
+    #navbar li {
+        float: none;
+        width: 100%;
+    }
 }

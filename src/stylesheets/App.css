@@ -17,26 +17,25 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: #333;
-  height: 46px;
-  position: absolute;
   bottom: 0;
   width: 100%;
 }
 /* line 11, ../sass/partials/_navigation.scss */
 #navbar li {
   float: left;
+  display: block;
 }
-/* line 13, ../sass/partials/_navigation.scss */
+/* line 14, ../sass/partials/_navigation.scss */
 #navbar li a.active {
   background-color: #4caf50;
   color: #FFFFFF;
 }
-/* line 17, ../sass/partials/_navigation.scss */
+/* line 18, ../sass/partials/_navigation.scss */
 #navbar li .dropdown {
   display: inline-block;
 }
 
-/* line 23, ../sass/partials/_navigation.scss */
+/* line 24, ../sass/partials/_navigation.scss */
 li a, .dropbtn {
   display: inline-block;
   color: #FFFFFF;
@@ -45,13 +44,14 @@ li a, .dropbtn {
   text-decoration: none;
 }
 
-/* line 31, ../sass/partials/_navigation.scss */
-li a:hover, .dropdown:hover .dropbtn {
+/* line 32, ../sass/partials/_navigation.scss */
+li:hover, .dropdown:hover .dropbtn {
   background-color: #ddd;
   color: #000000;
+  cursor: pointer;
 }
 
-/* line 37, ../sass/partials/_navigation.scss */
+/* line 39, ../sass/partials/_navigation.scss */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -60,7 +60,7 @@ li a:hover, .dropdown:hover .dropbtn {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-/* line 44, ../sass/partials/_navigation.scss */
+/* line 46, ../sass/partials/_navigation.scss */
 .dropdown-content a {
   color: #000000;
   padding: 12px 16px;
@@ -68,56 +68,77 @@ li a:hover, .dropdown:hover .dropbtn {
   display: block;
   text-align: left;
 }
-/* line 50, ../sass/partials/_navigation.scss */
+/* line 52, ../sass/partials/_navigation.scss */
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
 
-/* line 56, ../sass/partials/_navigation.scss */
+/* line 58, ../sass/partials/_navigation.scss */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
+@media screen and (max-width: 600px) {
+  /* line 63, ../sass/partials/_navigation.scss */
+  #navbar li {
+    float: none;
+    width: 100%;
+  }
+}
 /* line 5, ../sass/App.scss */
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
-/* line 9, ../sass/App.scss */
+/* line 10, ../sass/App.scss */
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   color: white;
-  position: relative;
+}
+/* line 17, ../sass/App.scss */
+.App-header h4 {
+  margin: 0;
 }
 
-/* line 17, ../sass/App.scss */
+/* line 22, ../sass/App.scss */
 .App-title {
   font-size: 1.5em;
 }
 
-/* line 21, ../sass/App.scss */
+/* line 26, ../sass/App.scss */
 .App-intro {
   font-size: large;
 }
 
-/* line 25, ../sass/App.scss */
+/* line 30, ../sass/App.scss */
 .Main-component-containter {
   margin-top: 20px;
   padding: 20px;
 }
 
-/* line 30, ../sass/App.scss */
+/* line 35, ../sass/App.scss */
 .Map-list {
   width: 300px;
   float: left;
   margin: 5px;
-  background-color: lightgray;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-/* line 35, ../sass/App.scss */
-.Map-list:after {
-  content: "";
-  display: table;
+
+/* line 43, ../sass/App.scss */
+.clear-fix {
   clear: both;
+}
+
+/* line 47, ../sass/App.scss */
+.Contact {
+  background-color: white;
+}
+
+/* line 52, ../sass/App.scss */
+footer {
+  background-color: #e4e4e4;
+  padding: 20px;
 }
