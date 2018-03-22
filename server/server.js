@@ -60,6 +60,34 @@ app.get("/maps/:map_id/images/:image_id", (req, res) => {
     });
 });
 
+// Get all images
+app.get("/images", (req, res) => {
+    var sql = "SELECT * FROM Image";
+    db.serialize(function() {
+        db.all(sql, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            res.send(rows);
+        });
+    });
+    //db.close();
+});
+
+// Get single image
+app.get("/images/:id", (req, res) => {
+    var sql = "SELECT * FROM Image WHERE id = ?";
+    db.serialize(function() {
+        db.get(sql, req.params.id, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            res.send(rows);
+        });
+    });
+    //db.close();
+});
+
 app.listen(port, "0.0.0.0", () => {
     console.log("Server started on port " + port);
 });

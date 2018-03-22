@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import Lightbox from "./Lightbox";
 
 class MapImage extends Component {
     constructor() {
         super();
         this.state = {
+            showModal: false,
             images: []
         }
     }
@@ -16,14 +18,21 @@ class MapImage extends Component {
             }))
     }
 
+    handleClick() {
+        this.setState(prevState => ({
+            showModal: !prevState.showModal
+        }));
+    }
+
     render() {
         //console.log("Images: ", this.state.images);
         //console.log(`/maps/${this.props.mapId}/images`);
         return (
             <div className="Map-image">
                 {this.state.images.map(image =>
-                    <img key={image.location} src={"media/" + image.location} width="300px" height="180px" alt="Bilde her.." />
+                    <img key={image.location} src={"media/" + image.location} width="300px" height="180px" alt="Bilde her.." onClick={this.handleClick.bind(this)} />
                 )}
+                {this.state.showModal ? <Lightbox /> : null}
             </div>
         );
     }

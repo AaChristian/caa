@@ -85,59 +85,74 @@ li:hover, .dropdown:hover .dropbtn {
     width: 100%;
   }
 }
-/* line 5, ../sass/App.scss */
+/* line 1, ../sass/partials/_lightbox.scss */
+.modal {
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+}
+
+/* line 6, ../sass/App.scss */
 .App {
   text-align: center;
   overflow: hidden;
 }
 
-/* line 10, ../sass/App.scss */
+/* line 11, ../sass/App.scss */
 .App-header {
   background-color: #222;
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
 }
-/* line 17, ../sass/App.scss */
+/* line 18, ../sass/App.scss */
 .App-header h4 {
   margin: 0;
 }
 
-/* line 22, ../sass/App.scss */
+/* line 23, ../sass/App.scss */
 .App-title {
   font-size: 1.5em;
 }
 
-/* line 26, ../sass/App.scss */
+/* line 27, ../sass/App.scss */
 .App-intro {
   font-size: large;
 }
 
-/* line 30, ../sass/App.scss */
+/* line 31, ../sass/App.scss */
 .Main-component-containter {
   margin-top: 20px;
   padding: 20px;
 }
 
-/* line 35, ../sass/App.scss */
+/* line 36, ../sass/App.scss */
 .Map-list {
   width: 300px;
   float: left;
   margin: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+/* line 42, ../sass/App.scss */
+.Map-list:hover {
+  background-color: #eaeaea;
+}
+/* line 45, ../sass/App.scss */
+.Map-list img {
+  cursor: pointer;
+}
 
-/* line 43, ../sass/App.scss */
+/* line 51, ../sass/App.scss */
 .clear-fix {
   clear: both;
 }
 
-/* line 47, ../sass/App.scss */
+/* line 55, ../sass/App.scss */
 .Contact {
   background-color: white;
 }
 
-/* line 52, ../sass/App.scss */
+/* line 60, ../sass/App.scss */
 footer {
   background-color: #e4e4e4;
   padding: 20px;

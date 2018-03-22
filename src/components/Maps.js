@@ -17,6 +17,10 @@ class Maps extends Component {
             }));
     }
 
+    handleLightbox() {
+        
+    }
+
     render() {
         return (
             <div className="Maps">
