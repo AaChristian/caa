@@ -12,7 +12,9 @@ app.get("/maps", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            res.send(rows);
+            console.log(JSON.stringify(rows));
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
         });
     });
     //db.close();
@@ -25,7 +27,9 @@ app.get("/maps/:id", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            res.send(rows);
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
         });
     });
 });
@@ -40,7 +44,9 @@ app.get("/maps/:id/images", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            res.send(rows);
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
         });
     });
 });
@@ -55,7 +61,9 @@ app.get("/maps/:map_id/images/:image_id", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            res.send(rows);
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
         });
     });
 });
@@ -68,7 +76,10 @@ app.get("/images", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            res.send(rows);
+            //res.send(rows);
+            //res.setHeader('Content-Type', 'application/json');
+            //res.send(JSON.stringify(rows));
+            res.json(rows);
         });
     });
     //db.close();
@@ -82,7 +93,9 @@ app.get("/images/:id", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            res.send(rows);
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
         });
     });
     //db.close();

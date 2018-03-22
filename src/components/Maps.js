@@ -18,7 +18,7 @@ class Maps extends Component {
     }
 
     handleLightbox() {
-        
+
     }
 
     render() {
