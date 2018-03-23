@@ -2,6 +2,7 @@
 @import "partials/base.scss";
 @import "partials/navigation.scss";
 @import "partials/lightbox.scss";
+@import "partials/forms.scss";
 
 .App {
   text-align: center;
@@ -32,7 +33,10 @@
     margin-top: 20px;
     padding: 20px;
 }
-
+.Maps h2 {
+    margin: 0;
+    padding-top: 20px;
+}
 .Map-list {
     width: 300px;
     float: left;
@@ -60,4 +64,49 @@
 footer {
     background-color: #e4e4e4;
     padding: 20px;
+}
+
+.Contact {
+    background-color: #efefef;
+    padding: 20px;
+    #contact-info {
+        padding: 10px;
+        background-color: lightblue;
+        width: 40%;
+        float: left;
+    }
+    #contact-form {
+        padding: 20px;
+        background-color: lightgreen;
+        width: 60%;
+        float: left;
+        textarea {
+            width: 100%;
+            max-width: 100%;
+            min-width: 260px;
+            height: 140px;
+            margin-bottom: 10px;
+        }
+        .contact-input {
+            float: left;
+            width: 40%;
+            min-width: 260px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            &:after {
+                content:'';
+                clear: both;
+            }
+        }
+        .contact-submit {
+            float: right;
+            &:disabled {
+                cursor: not-allowed;
+                background-color: #adabab;
+            }
+        }
+        .contact-form-errors {
+            height: 50px;
+        }
+    }
 }

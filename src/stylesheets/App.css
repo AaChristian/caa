@@ -88,13 +88,13 @@ li:hover, .dropdown:hover .dropbtn {
 /* line 1, ../sass/partials/_lightbox.scss */
 .modal {
   position: fixed;
-  z-index: 1;
-  padding-top: 100px;
+  z-index: 100;
   width: 100%;
   height: 100%;
-  background-color: black;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.95);
 }
-/* line 8, ../sass/partials/_lightbox.scss */
+/* line 10, ../sass/partials/_lightbox.scss */
 .modal .close {
   position: absolute;
   color: white;
@@ -103,69 +103,180 @@ li:hover, .dropdown:hover .dropbtn {
   right: 25px;
   font-weight: bold;
 }
+/* line 17, ../sass/partials/_lightbox.scss */
+.modal .close:hover, .modal .close.focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-/* line 6, ../sass/App.scss */
+/* line 25, ../sass/partials/_lightbox.scss */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* line 1, ../sass/partials/_forms.scss */
+input[type=text], textarea {
+  padding: 10px;
+  margin: 0;
+  resize: vertical;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+/* line 11, ../sass/partials/_forms.scss */
+input[type=submit] {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 12px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+/* line 18, ../sass/partials/_forms.scss */
+input[type=submit]:hover {
+  background-color: lightgray;
+}
+
+/* line 23, ../sass/partials/_forms.scss */
+.formErrors {
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: red;
+}
+/* line 28, ../sass/partials/_forms.scss */
+.formErrors p {
+  margin: 1px;
+}
+
+/* line 7, ../sass/App.scss */
 .App {
   text-align: center;
   overflow: hidden;
 }
 
-/* line 11, ../sass/App.scss */
+/* line 12, ../sass/App.scss */
 .App-header {
   background-color: #222;
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
 }
-/* line 18, ../sass/App.scss */
+/* line 19, ../sass/App.scss */
 .App-header h4 {
   margin: 0;
 }
 
-/* line 23, ../sass/App.scss */
+/* line 24, ../sass/App.scss */
 .App-title {
   font-size: 1.5em;
 }
 
-/* line 27, ../sass/App.scss */
+/* line 28, ../sass/App.scss */
 .App-intro {
   font-size: large;
 }
 
-/* line 31, ../sass/App.scss */
+/* line 32, ../sass/App.scss */
 .Main-component-containter {
   margin-top: 20px;
   padding: 20px;
 }
 
 /* line 36, ../sass/App.scss */
+.Maps h2 {
+  margin: 0;
+  padding-top: 20px;
+}
+
+/* line 40, ../sass/App.scss */
 .Map-list {
   width: 300px;
   float: left;
   margin: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-/* line 42, ../sass/App.scss */
+/* line 46, ../sass/App.scss */
 .Map-list:hover {
   background-color: #eaeaea;
 }
-/* line 45, ../sass/App.scss */
+/* line 49, ../sass/App.scss */
 .Map-list img {
   cursor: pointer;
 }
 
-/* line 51, ../sass/App.scss */
+/* line 55, ../sass/App.scss */
 .clear-fix {
   clear: both;
 }
 
-/* line 55, ../sass/App.scss */
+/* line 59, ../sass/App.scss */
 .Contact {
   background-color: white;
 }
 
-/* line 60, ../sass/App.scss */
+/* line 64, ../sass/App.scss */
 footer {
   background-color: #e4e4e4;
   padding: 20px;
+}
+
+/* line 69, ../sass/App.scss */
+.Contact {
+  background-color: #efefef;
+  padding: 20px;
+}
+/* line 72, ../sass/App.scss */
+.Contact #contact-info {
+  padding: 10px;
+  background-color: lightblue;
+  width: 40%;
+  float: left;
+}
+/* line 78, ../sass/App.scss */
+.Contact #contact-form {
+  padding: 20px;
+  background-color: lightgreen;
+  width: 60%;
+  float: left;
+}
+/* line 83, ../sass/App.scss */
+.Contact #contact-form textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 260px;
+  height: 140px;
+  margin-bottom: 10px;
+}
+/* line 90, ../sass/App.scss */
+.Contact #contact-form .contact-input {
+  float: left;
+  width: 40%;
+  min-width: 260px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+/* line 96, ../sass/App.scss */
+.Contact #contact-form .contact-input:after {
+  content: '';
+  clear: both;
+}
+/* line 101, ../sass/App.scss */
+.Contact #contact-form .contact-submit {
+  float: right;
+}
+/* line 103, ../sass/App.scss */
+.Contact #contact-form .contact-submit:disabled {
+  cursor: not-allowed;
+  background-color: #adabab;
+}
+/* line 108, ../sass/App.scss */
+.Contact #contact-form .contact-form-errors {
+  height: 50px;
 }

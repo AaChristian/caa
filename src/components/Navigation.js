@@ -7,8 +7,8 @@ class Navigation extends Component {
             <ul id="navbar">
 				<li><Link to="/">Hjem</Link></li>
 				<li><Link to="/router">Route test</Link></li>
-				<li><a href="#">Link 3</a></li>
-				<li><a href="#">Link 4</a></li>
+				<li><Link to="/maps">Maps</Link></li>
+				<li><Link to="/contact">Kontakt</Link></li>
 				<li className="dropdown">
 					<a href="javascript:void(0)" className="dropbtn">Testing</a>
 					<div className="dropdown-content">

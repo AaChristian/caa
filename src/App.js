@@ -11,18 +11,20 @@ import Footer from './components/Footer';
 import RouteTest from "./components/RouteTest";
 
 class App extends Component {
-  render() {
-    return (
-        <Router>
-            <div className="App">
-                <Header />
-                <Route exact path="/" component={Home} />
-                <Route path="/router" component={RouteTest} />
-                <Footer />
-            </div>
-      </Router>
-    );
-  }
+    render() {
+        return (
+            <Router>
+                <div className="App">
+                    <Header />
+                    <Route exact path="/" component={Home} />
+                    <Route path="/router" component={RouteTest} />
+                    <Route path="/maps" component={Maps} />
+                    <Route path="/contact" component={Contact} />
+                    <Footer />
+                </div>
+          </Router>
+        );
+    }
 }
 
 export default App;

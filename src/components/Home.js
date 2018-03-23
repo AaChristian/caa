@@ -4,12 +4,14 @@ import About from './About';
 import Contact from './Contact';
 
 class Home extends Component {
+
+
     render() {
         return (
             <div>
                 <About />
-                <Maps />
-                <Contact />
+                {/*}<Maps handleLightbox={this.props.handleLightbox}/>*/}
+                {/*<Contact />*/}
             </div>
         );
     }
