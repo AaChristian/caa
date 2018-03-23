@@ -1,6 +1,7 @@
 var express = require("express");
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("database.db");
+const nodemailer = require("nodemailer");
 
 const app = express();
 const port = 5000;
@@ -104,6 +105,36 @@ app.get("/images/:id", (req, res) => {
         });
     });
     //db.close();
+});
+
+// Get single image
+app.post("/send-mail", (req, res) => {
+    nodemailer.createTestAccount((err, account) => {
+      let transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        secure: false,
+        auth: {
+          user: account.user,
+          pass: account.pass
+        }
+      });
+      let mailOptions = {
+        from: "'C. Aa.' <caa@example.com>",
+        to: "heisann@test.no",
+        subject: "Test emne..",
+        text: "Dette er en test epost!"
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+      });
+    });
 });
 
 app.listen(port, "0.0.0.0", () => {

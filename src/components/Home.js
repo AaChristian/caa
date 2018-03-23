@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Maps from './Maps';
+//import Maps from './Maps';
 import About from './About';
-import Contact from './Contact';
+//import Contact from './Contact';
 
 class Home extends Component {
 
