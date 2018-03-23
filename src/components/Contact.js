@@ -32,7 +32,7 @@ class Contact extends Component {
         switch(fieldName) {
             case "name":
                 nameValid = value.length !== 0;
-                fieldValidationErrors.name =  ? "Fyll inn navn." : "";
+                fieldValidationErrors.name = nameValid ? "" : "Fyll inn navn.";
                 break;
             case "email":
                 emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
@@ -72,9 +72,9 @@ class Contact extends Component {
 
         });
         console.log(this.state);
-        fetch("/send-mail", {
+        /*fetch("/send-mail", {
           method: "POST",
-        });
+      });*/
     }
 
     render() {

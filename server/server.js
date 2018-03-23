@@ -1,7 +1,8 @@
 var express = require("express");
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("database.db");
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
+const sendmail = require("sendmail");
 
 const app = express();
 const port = 5000;
@@ -109,7 +110,8 @@ app.get("/images/:id", (req, res) => {
 
 // Get single image
 app.post("/send-mail", (req, res) => {
-    nodemailer.createTestAccount((err, account) => {
+
+    /*nodemailer.createTestAccount((err, account) => {
       let transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email",
         port: 587,
@@ -135,6 +137,17 @@ app.post("/send-mail", (req, res) => {
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
       });
     });
+    */
+    sendmail({
+        from: "caa@example.com",
+        to: "chrizzy89@gmail.com",
+        subject: "Test emne..",
+        text: "Dette er en test epost!"
+    }, function (err, reply) {
+        console.log(err && err.stack);
+        console.dir(reply);
+    });
+
 });
 
 app.listen(port, "0.0.0.0", () => {
