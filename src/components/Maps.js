@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MapImage from "./MapImage";
-import Lightbox from "./Lightbox";
+import MapImage from "./maps/MapImage";
+import MapModal from "./maps/MapModal";
 //import axios from "axios";
 
 class Maps extends Component {
@@ -16,7 +16,7 @@ class Maps extends Component {
         fetch("/maps")
             .then(res => res.json())
             .then(maps => this.setState({maps}, () => {
-                console.log("Maps fetched..", maps);
+                //console.log("Maps fetched..", maps);
             }));
     }
 
@@ -26,7 +26,7 @@ class Maps extends Component {
             showModal: true
         });
     }
-    handleCloseLightbox(e) {
+    handleCloseMapModal(e) {
         e.preventDefault();
         this.setState({
             showModal: false
@@ -36,12 +36,12 @@ class Maps extends Component {
     render() {
         return (
             <div className="Maps">
-                {this.state.showModal ? <Lightbox handleCloseLightbox={this.handleCloseLightbox.bind(this)}/> : null}
+                {this.state.showModal ? <MapModal handleCloseMapModal={this.handleCloseMapModal.bind(this)}/> : null}
                 <h2>Maps</h2>
                 <p>Over the course of many years I have made several maps for multiple games. Some of which are shown below.</p>
                 {this.state.maps.map(map =>
-                    <div className="Map-list">
-                    <p key={map.id}>{map.name}</p>
+                    <div key={map.id} className="Map-list">
+                    <p>{map.name}</p>
                     <MapImage
                         mapId={map.id}
                         handleLightbox={this.handleOpenLightbox.bind(this)}

@@ -29,6 +29,10 @@ li a, .dropbtn {
     text-decoration: none;
 }
 
+.dropbtn {
+    border: none;
+}
+
 li:hover, .dropdown:hover .dropbtn {
     background-color: $light-gray;
     color: $black;
@@ -59,9 +63,21 @@ li:hover, .dropdown:hover .dropbtn {
     display: block;
 }
 
+// Right part of navigation bar
+#navbar_right {
+	float: right;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	vertical-align: middle;
+}
+
 @media screen and (max-width: 600px) {
     #navbar li {
         float: none;
+        width: 100%;
+    }
+    #navbar_right {
         width: 100%;
     }
 }

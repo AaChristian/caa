@@ -7,15 +7,16 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd .. && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client-deploy": "cd .. && serve -s -p 3000 build",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "deploy": "concurrently \"npm run start\" \"npm run client-deploy\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "concurrently": "^3.5.1",
     "express": "^4.16.3",
-    "nodemailer": "^4.6.3",
-    "sendmail": "^1.4.1",
     "sqlite3": "^4.0.0"
   },
   "devDependencies": {

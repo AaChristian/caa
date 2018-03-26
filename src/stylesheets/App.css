@@ -10,6 +10,16 @@ body {
   font-family: sans-serif;
 }
 
+/* line 11, ../sass/partials/_base.scss */
+a {
+  color: #182375;
+  text-decoration: none;
+}
+/* line 14, ../sass/partials/_base.scss */
+a:hover {
+  color: #3d52f1;
+}
+
 /* line 1, ../sass/partials/_navigation.scss */
 #navbar {
   list-style-type: none;
@@ -45,13 +55,18 @@ li a, .dropbtn {
 }
 
 /* line 32, ../sass/partials/_navigation.scss */
+.dropbtn {
+  border: none;
+}
+
+/* line 36, ../sass/partials/_navigation.scss */
 li:hover, .dropdown:hover .dropbtn {
   background-color: #ddd;
   color: #000000;
   cursor: pointer;
 }
 
-/* line 39, ../sass/partials/_navigation.scss */
+/* line 43, ../sass/partials/_navigation.scss */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -60,7 +75,7 @@ li:hover, .dropdown:hover .dropbtn {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-/* line 46, ../sass/partials/_navigation.scss */
+/* line 50, ../sass/partials/_navigation.scss */
 .dropdown-content a {
   color: #000000;
   padding: 12px 16px;
@@ -68,20 +83,34 @@ li:hover, .dropdown:hover .dropbtn {
   display: block;
   text-align: left;
 }
-/* line 52, ../sass/partials/_navigation.scss */
+/* line 56, ../sass/partials/_navigation.scss */
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
 
-/* line 58, ../sass/partials/_navigation.scss */
+/* line 62, ../sass/partials/_navigation.scss */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
+/* line 67, ../sass/partials/_navigation.scss */
+#navbar_right {
+  float: right;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
 @media screen and (max-width: 600px) {
-  /* line 63, ../sass/partials/_navigation.scss */
+  /* line 76, ../sass/partials/_navigation.scss */
   #navbar li {
     float: none;
+    width: 100%;
+  }
+
+  /* line 80, ../sass/partials/_navigation.scss */
+  #navbar_right {
     width: 100%;
   }
 }
@@ -135,7 +164,7 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   padding: 10px 12px;
-  background-color: white;
+  background-color: #eae8e8;
   color: black;
   cursor: pointer;
 }
@@ -144,139 +173,234 @@ input[type=submit]:hover {
   background-color: lightgray;
 }
 
-/* line 23, ../sass/partials/_forms.scss */
-.formErrors {
-  font-size: 12px;
-  margin-bottom: 10px;
-  color: red;
-}
-/* line 28, ../sass/partials/_forms.scss */
-.formErrors p {
-  margin: 1px;
-}
-
-/* line 7, ../sass/App.scss */
-.App {
-  text-align: center;
-  overflow: hidden;
-}
-
-/* line 12, ../sass/App.scss */
-.App-header {
-  background-color: #222;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  color: white;
-}
-/* line 19, ../sass/App.scss */
-.App-header h4 {
-  margin: 0;
-}
-
-/* line 24, ../sass/App.scss */
-.App-title {
-  font-size: 1.5em;
-}
-
-/* line 28, ../sass/App.scss */
-.App-intro {
-  font-size: large;
-}
-
-/* line 32, ../sass/App.scss */
-.Main-component-containter {
-  margin-top: 20px;
-  padding: 20px;
-}
-
-/* line 36, ../sass/App.scss */
-.Maps h2 {
-  margin: 0;
-  padding-top: 20px;
-}
-
-/* line 40, ../sass/App.scss */
-.Map-list {
-  width: 300px;
-  float: left;
-  margin: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-/* line 46, ../sass/App.scss */
-.Map-list:hover {
-  background-color: #eaeaea;
-}
-/* line 49, ../sass/App.scss */
-.Map-list img {
-  cursor: pointer;
-}
-
-/* line 55, ../sass/App.scss */
-.clear-fix {
-  clear: both;
-}
-
-/* line 59, ../sass/App.scss */
+/* line 1, ../sass/partials/_contact.scss */
 .Contact {
-  background-color: white;
-}
-
-/* line 64, ../sass/App.scss */
-footer {
-  background-color: #e4e4e4;
+  background-color: #f5f5f5;
   padding: 20px;
 }
 
-/* line 69, ../sass/App.scss */
-.Contact {
-  background-color: #efefef;
-  padding: 20px;
-}
-/* line 72, ../sass/App.scss */
-.Contact #contact-info {
-  padding: 10px;
-  background-color: lightblue;
+/* line 6, ../sass/partials/_contact.scss */
+#contact-info {
+  padding: 70px 20px 5px 20px;
+  font-size: 14px;
   width: 40%;
+  height: 100%;
+  text-align: left;
   float: left;
 }
-/* line 78, ../sass/App.scss */
-.Contact #contact-form {
+
+/* line 16, ../sass/partials/_contact.scss */
+#contact-form {
   padding: 20px;
-  background-color: lightgreen;
   width: 60%;
   float: left;
 }
-/* line 83, ../sass/App.scss */
-.Contact #contact-form textarea {
+/* line 21, ../sass/partials/_contact.scss */
+#contact-form textarea {
   width: 100%;
   max-width: 100%;
   min-width: 260px;
   height: 140px;
   margin-bottom: 10px;
 }
-/* line 90, ../sass/App.scss */
-.Contact #contact-form .contact-input {
+/* line 28, ../sass/partials/_contact.scss */
+#contact-form .contact-input {
   float: left;
   width: 40%;
   min-width: 260px;
   margin-bottom: 10px;
   margin-right: 10px;
 }
-/* line 96, ../sass/App.scss */
-.Contact #contact-form .contact-input:after {
+/* line 34, ../sass/partials/_contact.scss */
+#contact-form .contact-input:after {
   content: '';
   clear: both;
 }
-/* line 101, ../sass/App.scss */
-.Contact #contact-form .contact-submit {
+/* line 39, ../sass/partials/_contact.scss */
+#contact-form .contact-submit {
   float: right;
 }
-/* line 103, ../sass/App.scss */
-.Contact #contact-form .contact-submit:disabled {
+/* line 41, ../sass/partials/_contact.scss */
+#contact-form .contact-submit:disabled {
   cursor: not-allowed;
   background-color: #adabab;
 }
-/* line 108, ../sass/App.scss */
-.Contact #contact-form .contact-form-errors {
+/* line 46, ../sass/partials/_contact.scss */
+#contact-form .contact-form-info {
+  margin: 0;
+  padding: 10px;
   height: 50px;
+}
+/* line 51, ../sass/partials/_contact.scss */
+#contact-form .formErrors, #contact-form .formMessages {
+  font-size: 14px;
+  margin: 0;
+}
+/* line 56, ../sass/partials/_contact.scss */
+#contact-form .formErrors p, #contact-form .formMessages p {
+  font-weight: bold;
+  margin: 1px;
+}
+/* line 61, ../sass/partials/_contact.scss */
+#contact-form .formErrors {
+  color: red;
+}
+/* line 64, ../sass/partials/_contact.scss */
+#contact-form .formMessages {
+  color: #11a011;
+}
+
+/* line 69, ../sass/partials/_contact.scss */
+.contact-info-detail {
+  padding: 2px;
+  margin: 10px 0;
+}
+/* line 72, ../sass/partials/_contact.scss */
+.contact-info-detail img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+/* line 77, ../sass/partials/_contact.scss */
+.contact-info-detail span {
+  padding-left: 10px;
+  vertical-align: middle;
+}
+
+/* line 83, ../sass/partials/_contact.scss */
+.contact-test--btn {
+  float: left;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 12px;
+  background-color: #eae8e8;
+  color: black;
+  margin-left: 5px;
+  cursor: pointer;
+}
+/* line 92, ../sass/partials/_contact.scss */
+.contact-test--btn:hover {
+  background-color: lightgray;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 98, ../sass/partials/_contact.scss */
+  #contact-info {
+    width: 100%;
+  }
+
+  /* line 102, ../sass/partials/_contact.scss */
+  #contact-form {
+    width: 100%;
+  }
+}
+/* line 1, ../sass/partials/_message.scss */
+.Message-single, .no-messages {
+  width: 80%;
+  min-width: 200px;
+  margin: 20px auto;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: left;
+}
+/* line 9, ../sass/partials/_message.scss */
+.Message-single div, .no-messages div {
+  margin: 10px;
+}
+
+/* line 13, ../sass/partials/_message.scss */
+.no-messages {
+  text-align: center;
+  padding: 20px;
+}
+
+/* line 18, ../sass/partials/_message.scss */
+.message-message {
+  background-color: #fbfbfb;
+  padding: 15px;
+}
+
+/* line 23, ../sass/partials/_message.scss */
+.manage-message {
+  text-align: right;
+}
+/* line 26, ../sass/partials/_message.scss */
+.manage-message img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* line 9, ../sass/App.scss */
+.App {
+  text-align: center;
+  overflow: hidden;
+}
+
+/* line 14, ../sass/App.scss */
+.App-header {
+  background-color: #222;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+}
+/* line 21, ../sass/App.scss */
+.App-header h4 {
+  margin: 0;
+}
+
+/* line 26, ../sass/App.scss */
+.App-title {
+  font-size: 1.5em;
+}
+
+/* line 30, ../sass/App.scss */
+.App-intro {
+  font-size: large;
+}
+
+/* line 34, ../sass/App.scss */
+.Main-component-containter {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+/* line 38, ../sass/App.scss */
+.Maps h2 {
+  margin: 0;
+  padding-top: 20px;
+}
+
+/* line 42, ../sass/App.scss */
+.Map-list {
+  width: 300px;
+  float: left;
+  margin: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* line 48, ../sass/App.scss */
+.Map-list:hover {
+  background-color: #eaeaea;
+}
+/* line 51, ../sass/App.scss */
+.Map-list img {
+  cursor: pointer;
+}
+
+/* line 56, ../sass/App.scss */
+.clear-fix {
+  clear: both;
+}
+
+/* line 60, ../sass/App.scss */
+footer {
+  background-color: #e4e4e4;
+  padding: 20px;
+}
+/* line 63, ../sass/App.scss */
+footer .external-credit {
+  font-size: 10px;
+  text-align: center;
 }

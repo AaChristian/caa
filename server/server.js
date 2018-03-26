@@ -1,11 +1,23 @@
 var express = require("express");
 var sqlite3 = require("sqlite3").verbose();
+var bodyParser = require('body-parser');
 var db = new sqlite3.Database("database.db");
-//const nodemailer = require("nodemailer");
-const sendmail = require("sendmail");
+var fs = require('fs');
 
 const app = express();
 const port = 5000;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get("/", function(req, res) {
+    fs.readFile('index.html', function (err, html) {
+         res.writeHeader(200, {"Content-Type": 'text/html'});
+         res.write(html);
+         res.end();
+    });
+});
+
 // Get all maps
 app.get("/maps", (req, res) => {
     var sql = "SELECT * FROM Map";
@@ -14,7 +26,39 @@ app.get("/maps", (req, res) => {
             if (err) {
                 console.log("Error: " + err.message);
             }
-            console.log(JSON.stringify(rows));
+            //console.log(JSON.stringify(rows));
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
+            //res.json(rows);
+        });
+    });
+    //db.close();
+});
+// Get all maps that are released
+app.get("/maps/released", (req, res) => {
+    var sql = "SELECT * FROM Map WHERE status = 'Released'";
+    db.serialize(function() {
+        db.all(sql, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            //console.log(JSON.stringify(rows));
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
+            //res.json(rows);
+        });
+    });
+    //db.close();
+});
+// Get all maps that are released
+app.get("/maps/unreleased", (req, res) => {
+    var sql = "SELECT * FROM Map WHERE status != 'Released'";
+    db.serialize(function() {
+        db.all(sql, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            //console.log(JSON.stringify(rows));
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify(rows));
             //res.json(rows);
@@ -108,46 +152,96 @@ app.get("/images/:id", (req, res) => {
     //db.close();
 });
 
+// Get all images
+app.get("/contactMessages", (req, res) => {
+    var sql = `SELECT id, name, email, message,
+            datetime(recieved, 'localtime') as recieved
+            FROM ContactMessage ORDER BY recieved DESC`;
+    db.serialize(function() {
+        db.all(sql, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
+            //res.json(rows);
+        });
+    });
+    //db.close();
+});
+
 // Get single image
-app.post("/send-mail", (req, res) => {
-
-    /*nodemailer.createTestAccount((err, account) => {
-      let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: account.user,
-          pass: account.pass
-        }
-      });
-      let mailOptions = {
-        from: "'C. Aa.' <caa@example.com>",
-        to: "heisann@test.no",
-        subject: "Test emne..",
-        text: "Dette er en test epost!"
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-        console.log('Message sent: %s', info.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-      });
+app.get("/contactMessages/:id", (req, res) => {
+    var sql = `SELECT id, name, email, message,
+            datetime(recieved, 'localtime') as recieved
+            FROM contactMessage WHERE id = ?`;
+    db.serialize(function() {
+        db.get(sql, req.params.id, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
+            //res.json(rows);
+        });
     });
-    */
-    sendmail({
-        from: "caa@example.com",
-        to: "chrizzy89@gmail.com",
-        subject: "Test emne..",
-        text: "Dette er en test epost!"
-    }, function (err, reply) {
-        console.log(err && err.stack);
-        console.dir(reply);
-    });
+    //db.close();
+});
 
+// Get all contact messages
+app.post("/contactMessages", (req, res) => {
+    var sql = "INSERT INTO contactMessage (name, email, message) VALUES (?, ?, ?)";
+    console.log(req.body);
+    db.serialize(function() {
+        db.get(sql, req.body.name, req.body.email, req.body.message, function(err) {
+            if (err) {
+                console.log("Error: " + err.message);
+                res.status(500);
+                res.send("Error..");
+            } else {
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(req.body);
+            }
+        });
+    });
+    //db.close();
+});
+
+// Delete all contact messages
+app.delete("/contactMessages", (req, res) => {
+    var sql = "DELETE FROM ContactMessage";
+    db.serialize(function() {
+        db.run(sql, function(err) {
+            if (err) {
+                console.error( err.message);
+                res.status(500);
+                res.send("Error..");
+            } else {
+                res.send("All " + this.changes + " contact messages deleted.");
+            }
+        });
+    });
+    //db.close();
+});
+
+// Delete single contact mesasge
+app.delete("/contactMessages/:id", (req, res) => {
+    var sql = "DELETE FROM ContactMessage WHERE id = ?";
+    db.serialize(function() {
+        db.run(sql, req.params.id, function(err) {
+            if (err) {
+                console.error( err.message);
+                res.status(500);
+                res.send("Error..");
+            } else {
+                res.send("Record with id " + req.params.id + " deleted.");
+            }
+        });
+    });
+    //db.close();
 });
 
 app.listen(port, "0.0.0.0", () => {

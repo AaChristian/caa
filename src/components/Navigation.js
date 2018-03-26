@@ -6,17 +6,19 @@ class Navigation extends Component {
         return (
             <ul id="navbar">
 				<li><Link to="/">Hjem</Link></li>
-				<li><Link to="/router">Route test</Link></li>
 				<li><Link to="/maps">Maps</Link></li>
 				<li><Link to="/contact">Kontakt</Link></li>
 				<li className="dropdown">
-					<a href="javascript:void(0)" className="dropbtn">Testing</a>
+					<div className="dropbtn">Testing</div>
 					<div className="dropdown-content">
-						<a href="#">Link</a>
-						<a href="#">Link 2</a>
-						<a href="#">Link 3</a>
+						<Link to="/path1">Link 1</Link>
+						<Link to="/path2">Link 2</Link>
+						<Link to="/path3">Link 3</Link>
 					</div>
 				</li>
+                <div id="navbar_right">
+                    <li><Link to="/messages">Meldinger</Link></li>
+                </div>
             </ul>
         );
     }

@@ -1,0 +1,32 @@
+.Message-single, .no-messages {
+    width: 80%;
+    min-width: 200px;
+    margin: 20px auto;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    padding:10px;
+    text-align: left;
+    div {
+        margin: 10px;
+    }
+}
+.no-messages {
+    text-align: center;
+    padding: 20px;
+}
+
+.message-message {
+    background-color: #fbfbfb;
+    padding: 15px;
+}
+
+.manage-message {
+    //background-color: lightgray;
+    text-align: right;
+    img {
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+}

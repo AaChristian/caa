@@ -12,7 +12,7 @@ class MapImage extends Component {
         fetch(`/maps/${this.props.mapId}/images`)
             .then(res => res.json())
             .then(images => this.setState({images}, () => {
-                console.log(`Images fetched for map ${this.props.mapId}...`, images);
+                //console.log(`Images fetched for map ${this.props.mapId}...`, images);
             }))
     }
 

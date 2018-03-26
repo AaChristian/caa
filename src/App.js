@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 import Header from './components/Header';
 import Home from './components/Home';
 import Maps from './components/Maps';
-import About from './components/About';
+//import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-import RouteTest from "./components/RouteTest";
+import Messages from "./components/Messages";
 
 class App extends Component {
     render() {
@@ -16,10 +16,15 @@ class App extends Component {
             <Router>
                 <div className="App">
                     <Header />
-                    <Route exact path="/" component={Home} />
-                    <Route path="/router" component={RouteTest} />
-                    <Route path="/maps" component={Maps} />
-                    <Route path="/contact" component={Contact} />
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/messages" component={Messages} />
+                        <Route path="/maps" component={Maps} />
+                        <Route path="/contact" component={Contact} />
+                        <Route path="*" render={() =>
+                            <Redirect to="/"/>
+                        } />
+                    </Switch>
                     <Footer />
                 </div>
           </Router>
