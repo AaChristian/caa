@@ -374,18 +374,18 @@ input[type=submit]:hover {
 }
 
 /* line 42, ../sass/App.scss */
-.Map-list {
+.Map-box {
   width: 300px;
   float: left;
   margin: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 /* line 48, ../sass/App.scss */
-.Map-list:hover {
+.Map-box:hover {
   background-color: #eaeaea;
 }
 /* line 51, ../sass/App.scss */
-.Map-list img {
+.Map-box img {
   cursor: pointer;
 }
 

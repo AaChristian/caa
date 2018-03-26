@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MapImage from "./maps/MapImage";
+import MapBox from "./maps/MapBox";
 import MapModal from "./maps/MapModal";
 //import axios from "axios";
 
@@ -40,13 +41,11 @@ class Maps extends Component {
                 <h2>Maps</h2>
                 <p>Over the course of many years I have made several maps for multiple games. Some of which are shown below.</p>
                 {this.state.maps.map(map =>
-                    <div key={map.id} className="Map-list">
-                    <p>{map.name}</p>
-                    <MapImage
-                        mapId={map.id}
-                        handleLightbox={this.handleOpenLightbox.bind(this)}
-                    />
-                    </div>
+                  <MapBox
+                      key={map.id}
+                      mapId={map.id}
+                      name={map.name}
+                      handleLightbox={this.handleOpenLightbox.bind(this)} />
                 )}
                 <div className="clear-fix"></div>
 
