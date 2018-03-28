@@ -114,17 +114,20 @@ li:hover, .dropdown:hover .dropbtn {
     width: 100%;
   }
 }
-/* line 1, ../sass/partials/_lightbox.scss */
-.modal {
+/* line 1, ../sass/partials/_mapModal.scss */
+.Map-modal {
   position: fixed;
-  z-index: 100;
+  z-index: 1;
+  padding-top: 200px;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.95);
+  margin-top: -150px;
+  background-color: rgba(0, 0, 0, 0.58);
+  text-align: left;
 }
-/* line 10, ../sass/partials/_lightbox.scss */
-.modal .close {
+/* line 12, ../sass/partials/_mapModal.scss */
+.Map-modal .close {
   position: absolute;
   color: white;
   font-size: 35px;
@@ -132,21 +135,100 @@ li:hover, .dropdown:hover .dropbtn {
   right: 25px;
   font-weight: bold;
 }
-/* line 17, ../sass/partials/_lightbox.scss */
-.modal .close:hover, .modal .close.focus {
+/* line 19, ../sass/partials/_mapModal.scss */
+.Map-modal .close:hover, .Map-modal .close.focus {
   color: #999;
   text-decoration: none;
   cursor: pointer;
 }
 
-/* line 25, ../sass/partials/_lightbox.scss */
+/* line 27, ../sass/partials/_mapModal.scss */
 .modal-content {
   position: relative;
-  background-color: #fefefe;
+  background-color: #e8e8e8;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
   margin: auto;
-  padding: 0;
-  width: 90%;
+  padding: 10px 30px;
+  width: 60%;
+  min-width: 320px;
   max-width: 1200px;
+}
+
+/* line 39, ../sass/partials/_mapModal.scss */
+.map-details, .map-info, .map-images {
+  margin: 10px 0;
+  padding: 10px;
+}
+
+/* line 44, ../sass/partials/_mapModal.scss */
+.map-details {
+  background-color: #fbfbfb;
+  border-radius: 5px;
+}
+/* line 47, ../sass/partials/_mapModal.scss */
+.map-details:after {
+  content: '';
+  clear: both;
+}
+
+/* line 52, ../sass/partials/_mapModal.scss */
+.map-detail-name {
+  width: 20%;
+  min-width: 110px;
+  float: left;
+}
+
+/* line 57, ../sass/partials/_mapModal.scss */
+.map-detail-item {
+  padding: 2px;
+}
+/* line 59, ../sass/partials/_mapModal.scss */
+.map-detail-item:after {
+  content: '';
+  clear: both;
+}
+
+/* line 64, ../sass/partials/_mapModal.scss */
+.map-status {
+  height: 25px;
+  background-color: #c7c7c7;
+  border-radius: 5px;
+}
+
+/* line 69, ../sass/partials/_mapModal.scss */
+.map-progress {
+  height: 100%;
+  background-color: #4caf50;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px 0 0 5px;
+  padding: 5px;
+}
+
+/* line 79, ../sass/partials/_mapModal.scss */
+.map-info {
+  margin: 0;
+  padding: 0;
+}
+/* line 82, ../sass/partials/_mapModal.scss */
+.map-info h4 {
+  margin: 5px;
+}
+
+/* line 86, ../sass/partials/_mapModal.scss */
+.map-info-text {
+  background-color: #fbfbfb;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* line 91, ../sass/partials/_mapModal.scss */
+.map-images {
+  background-color: #fbfbfb;
+  border-radius: 5px;
 }
 
 /* line 1, ../sass/partials/_forms.scss */
@@ -333,73 +415,127 @@ input[type=submit]:hover {
   cursor: pointer;
 }
 
-/* line 9, ../sass/App.scss */
+/* line 1, ../sass/partials/_editmap.scss */
+.map-edit-container {
+  background-color: lightgreen;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* line 7, ../sass/partials/_editmap.scss */
+.map-edit-select-container {
+  background-color: lightblue;
+  width: 25%;
+  height: 800px;
+  float: left;
+  list-style-type: none;
+  text-align: left;
+  overflow-y: auto;
+  padding: 10px;
+}
+/* line 16, ../sass/partials/_editmap.scss */
+.map-edit-select-container ul {
+  margin: 0;
+  padding: 0;
+}
+/* line 20, ../sass/partials/_editmap.scss */
+.map-edit-select-container li {
+  display: block;
+  width: 100%;
+}
+
+/* line 26, ../sass/partials/_editmap.scss */
+.map-edit-form-container {
+  background-color: lightyellow;
+  width: 75%;
+  float: left;
+}
+
+/* line 32, ../sass/partials/_editmap.scss */
+.map-edit-form-general {
+  background-color: lightgray;
+}
+
+/* line 36, ../sass/partials/_editmap.scss */
+.map-edit-form-images {
+  background-color: orange;
+}
+
+/* line 10, ../sass/App.scss */
 .App {
   text-align: center;
   overflow: hidden;
 }
 
-/* line 14, ../sass/App.scss */
+/* line 17, ../sass/App.scss */
 .App-header {
   background-color: #222;
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
 }
-/* line 21, ../sass/App.scss */
+/* line 24, ../sass/App.scss */
 .App-header h4 {
   margin: 0;
 }
 
-/* line 26, ../sass/App.scss */
+/* line 29, ../sass/App.scss */
 .App-title {
   font-size: 1.5em;
 }
 
-/* line 30, ../sass/App.scss */
+/* line 33, ../sass/App.scss */
 .App-intro {
   font-size: large;
 }
 
-/* line 34, ../sass/App.scss */
+/* line 37, ../sass/App.scss */
 .Main-component-containter {
   margin-top: 20px;
   padding: 20px;
 }
 
-/* line 38, ../sass/App.scss */
+/* line 42, ../sass/App.scss */
 .Maps h2 {
   margin: 0;
   padding-top: 20px;
 }
 
-/* line 42, ../sass/App.scss */
+/* line 47, ../sass/App.scss */
 .Map-box {
   width: 300px;
   float: left;
   margin: 5px;
+  position: relative;
+  cursor: pointer;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-/* line 48, ../sass/App.scss */
+/* line 55, ../sass/App.scss */
 .Map-box:hover {
   background-color: #eaeaea;
 }
-/* line 51, ../sass/App.scss */
-.Map-box img {
-  cursor: pointer;
+
+/* line 59, ../sass/App.scss */
+.map-box-name {
+  padding: 10px 0;
 }
 
-/* line 56, ../sass/App.scss */
+/* line 63, ../sass/App.scss */
+.map-name-released:hover {
+  background-color: lightgreen;
+}
+
+/* line 68, ../sass/App.scss */
 .clear-fix {
   clear: both;
 }
 
-/* line 60, ../sass/App.scss */
+/* line 72, ../sass/App.scss */
 footer {
   background-color: #e4e4e4;
   padding: 20px;
 }
-/* line 63, ../sass/App.scss */
+/* line 75, ../sass/App.scss */
 footer .external-credit {
   font-size: 10px;
   text-align: center;

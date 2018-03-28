@@ -18,6 +18,7 @@ class Navigation extends Component {
 				</li>
                 <div id="navbar_right">
                     <li><Link to="/messages">Meldinger</Link></li>
+                    <li><Link to="/editmap">Endre map</Link></li>
                 </div>
             </ul>
         );

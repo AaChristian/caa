@@ -22,7 +22,14 @@ class MapImage extends Component {
         return (
             <div className="Map-image">
                 {this.state.images.map(image =>
-                    <img key={image.location} src={"media/" + image.location} width="300px" height="180px" alt="Bilde her.." onClick={this.props.handleLightbox} />
+                    <img
+                        key={image.location}
+                        src={"media/" + image.location}
+                        width="300px"
+                        height="180px"
+                        alt="Bilde her.."
+                        data-mapid={this.props.mapId}
+                        onClick={this.props.handleLightbox} />
                 )}
             </div>
         );

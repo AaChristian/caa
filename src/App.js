@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Header from './components/Header';
 import Home from './components/Home';
 import Maps from './components/Maps';
-//import About from './components/About';
+import EditMap from './components/EditMap';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -18,6 +18,7 @@ class App extends Component {
                     <Header />
                     <Switch>
                         <Route exact path="/" component={Home} />
+                        <Route path="/editmap" component={EditMap} />
                         <Route path="/messages" component={Messages} />
                         <Route path="/maps" component={Maps} />
                         <Route path="/contact" component={Contact} />

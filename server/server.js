@@ -83,10 +83,8 @@ app.get("/maps/:id", (req, res) => {
 });
 // Get all images for a single map
 app.get("/maps/:id/images", (req, res) => {
-    var sql = `SELECT Image.location FROM Map
-            INNER JOIN MapHasImages ON Map.id = MapHasImages.map_id
-            INNER JOIN Image ON Image.id = MapHasImages.image_id
-            WHERE Map.id = ?`;
+    var sql = `SELECT location FROM Image
+            WHERE map_id = ?`;
     db.serialize(function() {
         db.all(sql, req.params.id, function(err, rows) {
             if (err) {
@@ -101,10 +99,8 @@ app.get("/maps/:id/images", (req, res) => {
 });
 // Get single image for a single map
 app.get("/maps/:map_id/images/:image_id", (req, res) => {
-    var sql = `SELECT Image.location FROM Map
-            INNER JOIN MapHasImages ON Map.id = MapHasImages.map_id
-            INNER JOIN Image ON Image.id = MapHasImages.image_id
-            WHERE Map.id = ? AND Image.id = ?`;
+    var sql = `SELECT location FROM Image
+            WHERE map_id = ? AND id = ?`;
     db.serialize(function() {
         db.get(sql, req.params.map_id, req.params.image_id, function(err, rows) {
             if (err) {

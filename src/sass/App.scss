@@ -1,16 +1,19 @@
 @import "partials/variables.scss";
 @import "partials/base.scss";
 @import "partials/navigation.scss";
-@import "partials/lightbox.scss";
+@import "partials/mapModal.scss";
 @import "partials/forms.scss";
 @import "partials/contact.scss";
 @import "partials/message.scss";
+@import "partials/editmap.scss";
 
 .App {
   text-align: center;
   overflow: hidden;
 }
+header {
 
+}
 .App-header {
   background-color: #222;
   //height: 150px;
@@ -35,21 +38,30 @@
     margin-top: 20px;
     padding: 20px;
 }
-.Maps h2 {
-    margin: 0;
-    padding-top: 20px;
+.Maps {
+    h2 {
+        margin: 0;
+        padding-top: 20px;
+    }
 }
 .Map-box {
     width: 300px;
     float: left;
     margin: 5px;
+    position: relative;
+    cursor: pointer;
     //background-color: lightgray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     &:hover {
         background-color: #eaeaea;
     }
-    img {
-        cursor: pointer;
+}
+.map-box-name {
+    padding: 10px 0;
+}
+.map-name-released {
+    &:hover {
+        background-color: lightgreen;
     }
 }
 
