@@ -19,16 +19,16 @@ class MapModal extends Component {
                             <MapDetail key={key} name={key} value={map[key]} />
                         )}
                     </div>
-                    {map.status !== "Released" && map.status !== "NULL" &&
+                    {map.status !== "Released" && map.progress !== "NULL" &&
                     <div className="map-status">
-                        <div className="map-progress" style={{width: map.status}}>{map.status}</div>
+                        <div className="map-progress" style={{width: map.progress}}>{map.progress}</div>
                     </div>
                     }
-                    {map.info !== "NULL" &&
+                    {map.description !== "NULL" &&
                     <div className="map-info">
-                        <h4>Info</h4>
+                        <h4>Description</h4>
                         <div className="map-info-text">
-                            <div>{map.info}</div>
+                            <div>{map.description}</div>
                         </div>
                     </div>
                     }

@@ -10,11 +10,11 @@ class MapDetail extends Component {
     }
 
     render() {
-        let ignored = ["id", "info", "Released", "download"];
+        let ignored = ["id", "description", "Released", "download"];
         let name = this.props.name.split(/(?=[A-Z])/).join(" ").toLowerCase();
         // empty space: \u00a0
         let value = this.props.value !== "NULL" ? this.props.value : "n/a";
-        
+
         if (ignored.includes(name)) {
             return null;
         }

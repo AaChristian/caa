@@ -20,7 +20,7 @@ class EditMap extends Component {
             }));
     }
 
-    handleChange(e) {
+    handleSelectMap(e) {
         console.log("changed: " + e.target.value);
         let mapId = e.target.value;
         let maps = this.state.maps;
@@ -45,6 +45,26 @@ class EditMap extends Component {
         });
     }
 
+    handleResetForm() {
+        console.log("Resetting form..");
+        let mapIndex = this.state.mapIndex;
+        this.setState({
+            mapEdit: this.state.maps[mapIndex]
+        });
+    }
+    /* Update state with changes and save to database */
+    //// TODO: Save changes in database
+    handleSubmitChanges() {
+        console.log("Time to submit changes..");
+        let mapIndex = this.state.mapIndex;
+        let maps = this.state.maps;
+        maps[mapIndex] = this.state.mapEdit;
+        this.setState({
+            maps: maps
+        });
+
+    }
+
     handleUserInput(e) {
         const inputName = e.target.name;
         const inputValue = e.target.value;
@@ -67,7 +87,7 @@ class EditMap extends Component {
                             <li
                                 key={map.id}
                                 value={map.id}
-                                onClick={this.handleChange.bind(this)}>{map.name}</li>
+                                onClick={this.handleSelectMap.bind(this)}>{map.name}</li>
                         )}
                     </ul>
                 </div>
@@ -75,6 +95,8 @@ class EditMap extends Component {
                     <EditMapForm
                         map={this.state.mapEdit}
                         handleUserInput={this.handleUserInput.bind(this)}
+                        handleResetForm={this.handleResetForm.bind(this)}
+                        handleSubmitChanges={this.handleSubmitChanges.bind(this)}
                     />
                 }
                 <div className="clear-fix"></div>

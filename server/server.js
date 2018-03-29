@@ -34,6 +34,86 @@ app.get("/maps", (req, res) => {
     });
     //db.close();
 });
+
+// Get all maps TESTT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// TODO: Get all images belonging to each map and return those images in the same json object
+app.get("/mapstest", (req, res) => {
+    var sql = "SELECT * FROM Map LIMIT 2";
+    let map_id = -1;
+    var json = {};
+    var jsonArray = [];
+    var result = [];
+    console.log("hei..");
+    db.serialize(function() {
+        db.each(sql, function(err, row) {
+            //result = rows;
+            var index = row.id - 1;
+            //let imageArr = [];
+            var imageArr = [];
+            jsonArray.push(row);
+            //jsonArray[index].images = imageArr;
+            map_id = row.id;/*
+            db.all("SELECT * FROM Image WHERE map_id = ?", map_id, function(err, rows) {
+                //result = rows;
+                console.log("map_id: " + row.id);
+                console.log(rows);
+                var index = row.id - 1;
+                console.log("index : " + index);
+                jsonArray[index]["images"] = rows;
+                //res.json(jsonArray);
+            });*/
+            db.each("SELECT * FROM Image WHERE map_id = ?", map_id, function(err, rowImage) {
+                //result = rows;
+                console.log("map_id: " + rowImage.map_id);
+                //console.log(jsonArray[index]);
+                console.log(rowImage);
+                console.log("index : " + index);
+                jsonArray.push(rowImage);
+                imageArr.push(rowImage);
+                //row.images = rowImage;
+                //imageArr.push(rowImage);
+                //console.log(imageArr);
+                //res.json(jsonArray);
+            }, () => {
+
+                row.images = imageArr;
+                //console.log(row);
+                result.push(row);
+                console.log(result);
+                //jsonArray[index].images.push(imageArr)
+            });
+        }, function() {
+            //console.log(result);
+            //res.json(jsonArray);
+            //res.json(result);
+            //res.setHeader('Content-Type', 'application/json');
+            //res.send(JSON.stringify(result));
+        });
+        //console.log(result);
+        //result.forEach(function(element) {
+            //console.log(element);
+
+        //res.json(jsonArray);
+        //});
+
+    });/*
+    db.serialize(function() {
+        result.forEach( (element) => {
+            db.all("SELECT * FROM Image WHERE map_id = ?", element.id, function(err, rows) {
+                //result = rows;
+                console.log(rows);
+                res.json(result);
+            });
+        });
+
+    });*/
+    //console.log(result);
+    db.close(() => {
+        res.json(result);
+    });
+
+});
+
 // Get all maps that are released
 app.get("/maps/released", (req, res) => {
     var sql = "SELECT * FROM Map WHERE status = 'Released'";
