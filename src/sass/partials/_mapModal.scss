@@ -22,6 +22,9 @@
           cursor: pointer;
       }
     }
+    h4 {
+        margin: 5px;
+    }
 }
 
 .modal-content {
@@ -61,7 +64,7 @@
         clear: both;
     }
 }
-.map-status {
+.map-progress-container {
     height: 25px;
     background-color: #c7c7c7;
     border-radius: 5px;
@@ -79,9 +82,6 @@
 .map-info {
     margin: 0;
     padding: 0;
-    h4 {
-        margin: 5px;
-    }
 }
 .map-info-text {
     background-color: #fbfbfb;

@@ -3,6 +3,8 @@ var sqlite3 = require("sqlite3").verbose();
 var bodyParser = require('body-parser');
 var db = new sqlite3.Database("database.db");
 var fs = require('fs');
+var multer = require("multer");
+var path = require("path");
 
 const app = express();
 const port = 5000;
@@ -64,10 +66,10 @@ app.get("/mapstest", (req, res) => {
             });*/
             db.each("SELECT * FROM Image WHERE map_id = ?", map_id, function(err, rowImage) {
                 //result = rows;
-                console.log("map_id: " + rowImage.map_id);
+                //console.log("map_id: " + rowImage.map_id);
                 //console.log(jsonArray[index]);
-                console.log(rowImage);
-                console.log("index : " + index);
+                //console.log(rowImage);
+                //console.log("index : " + index);
                 jsonArray.push(rowImage);
                 imageArr.push(rowImage);
                 //row.images = rowImage;
@@ -82,10 +84,10 @@ app.get("/mapstest", (req, res) => {
                 console.log(result);
                 //jsonArray[index].images.push(imageArr)
             });
-        }, function() {
-            //console.log(result);
+        }, () => {
+            console.log(result);
             //res.json(jsonArray);
-            //res.json(result);
+            res.json(result);
             //res.setHeader('Content-Type', 'application/json');
             //res.send(JSON.stringify(result));
         });
@@ -108,9 +110,9 @@ app.get("/mapstest", (req, res) => {
 
     });*/
     //console.log(result);
-    db.close(() => {
+    /*db.close(() => {
         res.json(result);
-    });
+    });*/
 
 });
 
@@ -153,6 +155,8 @@ app.get("/maps/:id", (req, res) => {
         db.get(sql, req.params.id, function(err, rows) {
             if (err) {
                 console.log("Error: " + err.message);
+                res.status(500);
+                res.send("Error..");
             }
             //res.send(rows);
             res.setHeader('Content-Type', 'application/json');
@@ -161,10 +165,49 @@ app.get("/maps/:id", (req, res) => {
         });
     });
 });
+// Update single map
+app.put("/maps/:id", (req, res) => {
+    var sql = `UPDATE Map
+                SET name = ?, game= ?, type = ?, length = ?, difficulty = ?, description = ?
+                WHERE id = ?`;
+    var params = [];
+    for (key in req.body) {
+        params.push(req.body[key]);
+    }
+    params.push(req.params.id);
+    console.log(params);
+    db.serialize(function() {
+        db.run(sql, params, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            //res.send(rows);
+            //res.setHeader('Content-Type', 'application/json');
+            //res.send(JSON.stringify(rows));
+            res.json("Map updated!");
+        });
+    });
+});
 // Get all images for a single map
 app.get("/maps/:id/images", (req, res) => {
-    var sql = `SELECT location FROM Image
+    var sql = `SELECT id, location FROM Image
             WHERE map_id = ?`;
+    db.serialize(function() {
+        db.all(sql, req.params.id, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            //res.send(rows);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(rows));
+            //res.json(rows);
+        });
+    });
+});
+// Get only one image from a single map
+app.get("/maps/:id/images-first", (req, res) => {
+    var sql = `SELECT id, location FROM Image
+            WHERE map_id = ? LIMIT 1`;
     db.serialize(function() {
         db.all(sql, req.params.id, function(err, rows) {
             if (err) {
@@ -179,7 +222,7 @@ app.get("/maps/:id/images", (req, res) => {
 });
 // Get single image for a single map
 app.get("/maps/:map_id/images/:image_id", (req, res) => {
-    var sql = `SELECT location FROM Image
+    var sql = `SELECT id, location FROM Image
             WHERE map_id = ? AND id = ?`;
     db.serialize(function() {
         db.get(sql, req.params.map_id, req.params.image_id, function(err, rows) {
@@ -228,6 +271,58 @@ app.get("/images/:id", (req, res) => {
     //db.close();
 });
 
+// Delete all contact messages
+app.delete("/images", (req, res) => {
+    var sql = "DELETE FROM Image";
+    db.serialize(function() {
+        db.run(sql, function(err) {
+            if (err) {
+                console.error( err.message);
+                res.status(500);
+                res.send("Error..");
+            } else {
+                res.send("All " + this.changes + " images deleted.");
+            }
+        });
+    });
+    //db.close();
+});
+
+// Delete single contact mesasge
+app.delete("/images/:id", (req, res) => {
+    var sql = "SELECT * FROM Image WHERE id = ?";
+    var sqlDelete = "DELETE FROM Image WHERE id = ?";
+    let filename = "";
+    db.serialize(function() {
+        db.get(sql, req.params.id, function(err, row) {
+            if (err) {
+                console.log("Error: " + err.message);
+                res.status(500);
+                res.send("Error..");
+            } else {
+                console.log(row);
+                filename = row.location;
+            }
+        });
+        db.run(sqlDelete, req.params.id, function(err) {
+            if (err) {
+                console.error( err.message);
+                res.status(500);
+                res.send("Error..");
+            } else {
+                fs.unlink("../public/media/mapImages/" + filename, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    res.send("Record with id " + req.params.id + " deleted. Filename: " + filename);
+                });
+            }
+        });
+    });
+
+    //db.close();
+});
+
 // Get all images
 app.get("/contactMessages", (req, res) => {
     var sql = `SELECT id, name, email, message,
@@ -271,7 +366,7 @@ app.post("/contactMessages", (req, res) => {
     var sql = "INSERT INTO contactMessage (name, email, message) VALUES (?, ?, ?)";
     console.log(req.body);
     db.serialize(function() {
-        db.get(sql, req.body.name, req.body.email, req.body.message, function(err) {
+        db.run(sql, req.body.name, req.body.email, req.body.message, function(err) {
             if (err) {
                 console.log("Error: " + err.message);
                 res.status(500);
@@ -318,6 +413,55 @@ app.delete("/contactMessages/:id", (req, res) => {
         });
     });
     //db.close();
+});
+
+const storage = multer.diskStorage({
+    destination: "../public/media/mapImages/",
+    filename: function (req, file, cb) {
+        console.log(req.body);
+        cb(null, req.body.mapId + "-" + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage: storage
+}).single("mapImage");
+
+app.post("/upload-map-image", (req, res) => {
+    console.log("Uploading image..");
+    upload(req, res, (err) => {
+        if (err) {
+            console.error(err);
+            res.send("Error..");
+        } else {
+            /*
+                Map uploaded, now store it in the Image table
+                and connect it to req.body.mapId
+            */
+            //console.log(req.body.mapId);
+            //console.log("Image uploaded!");
+            var json = {};
+            var sql = "INSERT INTO Image (location, map_id) VALUES (?, ?)";
+            console.log(req.body);
+            db.serialize(function() {
+                db.run(sql, req.file.filename, req.body.mapId, function(err) {
+                    if (err) {
+                        console.log("Error: " + err.message);
+                        res.status(500);
+                        res.send("Error..");
+                    } else {
+                        //res.send(rows);
+                        json.id = this.lastID;
+                        json.location = req.file.filename;
+                        json.map_id = req.body.mapId;
+                        console.log(json);
+                        res.setHeader('Content-Type', 'application/json');
+                        res.send(json);
+                    }
+                });
+            });
+        }
+    });
 });
 
 app.listen(port, "0.0.0.0", () => {

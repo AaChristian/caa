@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-
+import MapEditImages from "./MapEditImages";
 
 class EditMapForm extends Component {
     render() {
@@ -39,6 +38,14 @@ class EditMapForm extends Component {
                             type="text" name="difficulty" className="map-edit-input"
                             value={map.difficulty} onChange={this.props.handleUserInput}/>
                     </div>
+                    <div className="map-edit-label">Progress ({map.progress + "%"})</div>
+                    <div>
+                        <input
+                            type="range" name="progress" className="map-edit-progress"
+                            min="0" max="100" value={map.progress}
+                            disabled={map.status.toLowerCase() === "released" ? true : false}
+                            onChange={this.props.handleUserInput} />
+                    </div>
                     <div className="map-edit-label">Description</div>
                         <textarea
                             name="description" value={map.description}
@@ -55,9 +62,14 @@ class EditMapForm extends Component {
                     </div>
                     <div className="clear-fix"></div>
                 </div>
-                <div className="map-edit-form-images">
-                    Slette og lette til bilder her (eget skjema)
-                </div>
+                <MapEditImages
+                    mapId={map.id}
+                    images={this.props.mapImages}
+                    handleDeleteImage={this.props.handleDeleteImage}
+                    handleFileSelect={this.props.handleFileSelect}
+                    handleFileSubmit={this.props.handleFileSubmit}
+                    fileValid={this.props.fileValid}
+                />
             </div>
         );
     }

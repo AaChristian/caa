@@ -20,8 +20,10 @@ class MapModal extends Component {
                         )}
                     </div>
                     {map.status !== "Released" && map.progress !== "NULL" &&
-                    <div className="map-status">
-                        <div className="map-progress" style={{width: map.progress}}>{map.progress}</div>
+                    <div><h4>Progress</h4>
+                    <div className="map-progress-container">
+                        <div className="map-progress" style={{width: map.progress + "%"}}>{map.progress}</div>
+                    </div>
                     </div>
                     }
                     {map.description !== "NULL" &&

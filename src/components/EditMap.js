@@ -7,7 +7,10 @@ class EditMap extends Component {
         this.state = {
             maps: [],           // All the maps fetched from database
             mapIndex: null,     // Index of map selected
-            mapEdit: null       // Map selected, this is what is changed when editing
+            mapEdit: null,       // Map selected, this is what is changed when editing
+            mapEditImages: [],
+            selectedFile: null,
+            fileValid: false
         }
     }
 
@@ -41,8 +44,25 @@ class EditMap extends Component {
         }
         this.setState({
             mapIndex: mapIndex,
-            mapEdit: this.state.maps[mapIndex]
+            mapEdit: this.state.maps[mapIndex],
+            selectedFile: null,
+            fileValid: false
         });
+        fetch(`/maps/${mapId}/images`)
+            .then(res => res.json())
+            .then(mapEditImages => this.setState({mapEditImages}, () => {
+                console.log("Images fetched..", mapEditImages);
+                //console.log(this.state.maps[2]);
+            }));
+    }
+
+    getMapImages() {
+        fetch(`/maps/${this.state.mapEdit.id}/images`)
+            .then(res => res.json())
+            .then(mapEditImages => this.setState({mapEditImages}, () => {
+                console.log("Images fetched..", mapEditImages);
+                //console.log(this.state.maps[2]);
+            }));
     }
 
     handleResetForm() {
@@ -59,6 +79,23 @@ class EditMap extends Component {
         let mapIndex = this.state.mapIndex;
         let maps = this.state.maps;
         maps[mapIndex] = this.state.mapEdit;
+        console.log(maps[mapIndex].id);
+        let {id, progress, status, releaseDate, download, ...data} = this.state.mapEdit;
+        console.log(data);
+
+        fetch(`/maps/${maps[mapIndex].id}`, {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        //.then(res => res.json())
+        .then(res => {
+            //this.getMapImages();
+        })
+
         this.setState({
             maps: maps
         });
@@ -76,8 +113,60 @@ class EditMap extends Component {
         }));
     }
 
+    handleDeleteImage(id) {
+        console.log("Gonna delete image with id: " + id);
+        console.log(`/images/${id}`);
+        fetch(`/images/${id}`, {
+            method: "DELETE"
+        }).then(res => {
+            console.log("Image deleted!");
+            //this.getMessages()
+            this.getMapImages();
+        })
+    }
+
+    handleFileSelect(e) {
+        let file = e.target.files[0];
+        let fileValid = true;
+        console.log("Selected file..", file);
+        // If File size is greater than 1 MB
+        if (file.size > 1048576) {
+            console.log("File size too big!");
+            fileValid = false;
+        }
+
+        this.setState({
+            selectedFile: e.target.files[0],
+            fileValid: fileValid
+        });
+    }
+
+    handleFileSubmit(e) {
+        e.preventDefault();
+        console.log("Time to submit image..");
+        var data = new FormData();
+        data.append("mapName", this.state.mapEdit.name);
+        data.append("mapId", this.state.mapEdit.id);
+        data.append("mapImage", this.state.selectedFile, this.state.selectedFile.name);
+        fetch("/upload-map-image", {
+            method: "POST",
+            body: data
+        })
+        .then(res => res.json())
+        .then(res => {
+            //console.log(res);
+            // Update the state with the newly inserted file to update UI
+            /*let mapEditImages = this.state.mapEditImages;
+            mapEditImages.push(res);
+            this.setState({
+                mapEditImages: mapEditImages
+            });*/
+            this.getMapImages();
+        })
+    }
+
     render() {
-        console.log(this.state);
+        //console.log(this.state);
         return (
             <div className="map-edit-container">
                 <div>Edit map here..</div>
@@ -94,9 +183,14 @@ class EditMap extends Component {
                 {this.state.mapIndex !== null &&
                     <EditMapForm
                         map={this.state.mapEdit}
+                        mapImages={this.state.mapEditImages}
                         handleUserInput={this.handleUserInput.bind(this)}
                         handleResetForm={this.handleResetForm.bind(this)}
                         handleSubmitChanges={this.handleSubmitChanges.bind(this)}
+                        handleDeleteImage={this.handleDeleteImage.bind(this)}
+                        handleFileSelect={this.handleFileSelect.bind(this)}
+                        handleFileSubmit={this.handleFileSubmit.bind(this)}
+                        fileValid={this.state.fileValid}
                     />
                 }
                 <div className="clear-fix"></div>
