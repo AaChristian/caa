@@ -168,7 +168,8 @@ app.get("/maps/:id", (req, res) => {
 // Update single map
 app.put("/maps/:id", (req, res) => {
     var sql = `UPDATE Map
-                SET name = ?, game= ?, type = ?, length = ?, difficulty = ?, description = ?
+                SET name = ?, game= ?, type = ?, length = ?,
+                difficulty = ?, progress = ?, releaseDate = ?, description = ?
                 WHERE id = ?`;
     var params = [];
     for (key in req.body) {

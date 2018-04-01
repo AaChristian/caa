@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import DatePicker from "react-datepicker";
+import moment from 'moment';
 import MapEditImages from "./MapEditImages";
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 class EditMapForm extends Component {
     render() {
@@ -38,6 +42,17 @@ class EditMapForm extends Component {
                             type="text" name="difficulty" className="map-edit-input"
                             value={map.difficulty} onChange={this.props.handleUserInput}/>
                     </div>
+                    {map.progress === 100 &&
+                        <div>
+                            <div className="map-edit-label">Release date</div>
+                            <div>
+                                <DatePicker
+                                    selected={map.releaseDate !== "NULL" ? moment(map.releaseDate) : moment()}
+                                    onChange={this.props.handleChangeDate}
+                                    />
+                            </div>
+                        </div>
+                    }
                     <div className="map-edit-label">Progress ({map.progress + "%"})</div>
                     <div>
                         <input

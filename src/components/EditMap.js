@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EditMapForm from "./EditMapForm";
+import moment from 'moment';
 
 class EditMap extends Component {
     constructor() {
@@ -10,12 +11,27 @@ class EditMap extends Component {
             mapEdit: null,       // Map selected, this is what is changed when editing
             mapEditImages: [],
             selectedFile: null,
-            fileValid: false
+            fileValid: false,
+            filterMaps: "all"
         }
     }
 
     componentDidMount() {
+
         fetch("/maps")
+            .then(res => res.json())
+            .then(maps => this.setState({maps}, () => {
+                console.log("Maps fetched..", maps);
+                //console.log(this.state.maps[2]);
+            }));
+            //this.getMaps();
+    }
+
+    getMaps() {
+        let filter = this.state.filterMaps;
+        let url = "/maps";
+        url += filter === "all" ? "" : "/" + filter;
+        fetch(url)
             .then(res => res.json())
             .then(maps => this.setState({maps}, () => {
                 console.log("Maps fetched..", maps);
@@ -80,7 +96,7 @@ class EditMap extends Component {
         let maps = this.state.maps;
         maps[mapIndex] = this.state.mapEdit;
         console.log(maps[mapIndex].id);
-        let {id, progress, status, releaseDate, download, ...data} = this.state.mapEdit;
+        let {id, status, download, ...data} = this.state.mapEdit;
         console.log(data);
 
         fetch(`/maps/${maps[mapIndex].id}`, {
@@ -109,6 +125,16 @@ class EditMap extends Component {
             mapEdit: {
                 ...prevState.mapEdit,
                 [inputName]: inputValue
+            }
+        }));
+    }
+
+    handleChangeDate(date) {
+        //console.log(moment(date).format("YYYY-MM-DD"));
+        this.setState(prevState => ({
+            mapEdit: {
+                ...prevState.mapEdit,
+                releaseDate: moment(date).format("YYYY-MM-DD")
             }
         }));
     }
@@ -165,20 +191,62 @@ class EditMap extends Component {
         })
     }
 
+    handleMapFilter(filter) {
+        console.log(filter);
+        /*this.setState({
+            filterMaps: filter
+        }, this.getMaps());*/;
+        let url = "/maps";
+        url += filter === "all" ? "" : "/" + filter;
+        fetch(url)
+            .then(res => res.json())
+            .then(maps => this.setState({
+                maps, filterMaps: filter
+            }, () => {
+                console.log("Maps fetched..", maps);
+                //console.log(this.state.maps[2]);
+            }));
+    }
+
     render() {
         //console.log(this.state);
+        let selectedMap = this.state.mapEdit !== null ? this.state.mapEdit.id : null;
         return (
             <div className="map-edit-container">
                 <div>Edit map here..</div>
-                <div className="map-edit-select-container">
-                    <ul>
-                        {this.state.maps.map(map =>
-                            <li
-                                key={map.id}
-                                value={map.id}
-                                onClick={this.handleSelectMap.bind(this)}>{map.name}</li>
-                        )}
-                    </ul>
+                <div className="map-edit-left-container">
+                    <div className="map-edit-add-btn">
+                        <button>+</button>
+                    </div>
+                    <div className="map-edit-select-filter">
+                        <div><button
+                            onClick={() => this.handleMapFilter("all")}
+                            className={this.state.filterMaps === "all" ? "filter-selected" : ""}>All
+                            </button>
+                        </div>
+                        <div><button
+                            onClick={() => this.handleMapFilter("released")}
+                            className={this.state.filterMaps === "released" ? "filter-selected" : ""}>Released
+                            </button>
+                        </div>
+                        <div><button
+                            onClick={() => this.handleMapFilter("unreleased")}
+                            className={this.state.filterMaps === "unreleased" ? "filter-selected" : ""}>Unreleased
+                            </button>
+                        </div>
+                    </div>
+                    <div className="clear-fix"></div>
+                    <div className="map-edit-select-container">
+                        <ul>
+                            {this.state.maps.map(map =>
+                                <li
+                                    key={map.id}
+                                    value={map.id}
+                                    className={map.id === selectedMap ? "map-selected" : ""}
+                                    onClick={this.handleSelectMap.bind(this)}>{map.name}</li>
+                            )}
+                        </ul>
+                    </div>
                 </div>
                 {this.state.mapIndex !== null &&
                     <EditMapForm
@@ -190,6 +258,7 @@ class EditMap extends Component {
                         handleDeleteImage={this.handleDeleteImage.bind(this)}
                         handleFileSelect={this.handleFileSelect.bind(this)}
                         handleFileSubmit={this.handleFileSubmit.bind(this)}
+                        handleChangeDate={this.handleChangeDate.bind(this)}
                         fileValid={this.state.fileValid}
                     />
                 }

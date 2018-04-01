@@ -6,6 +6,7 @@
 @import "partials/contact.scss";
 @import "partials/message.scss";
 @import "partials/editmap.scss";
+@import "partials/education.scss";
 
 .App {
   text-align: center;
@@ -13,6 +14,10 @@
 }
 header {
 
+}
+.Home {
+    width: 80%;
+    margin: 20px auto;
 }
 .App-header {
   background-color: #222;
