@@ -12,6 +12,8 @@ const port = 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//require('./routes')(app);
+
 app.get("/", function(req, res) {
     fs.readFile('index.html', function (err, html) {
          res.writeHeader(200, {"Content-Type": 'text/html'});
@@ -22,98 +24,117 @@ app.get("/", function(req, res) {
 
 // Get all maps
 app.get("/maps", (req, res) => {
-    var sql = "SELECT * FROM Map";
+    //var sql = "SELECT * FROM Map";
+    var sql = `SELECT Map.id, Map.name, Game.id AS gameId, Game.name AS game, Map.type, Map.difficulty, Map.length,
+                Map.progress, Map.status, Map.releaseDate, Map.download, Map.description
+                FROM Map INNER JOIN Game ON Map.game = Game.id`;
+    var sqlTypes = `SELECT MapType.id, MapType.name FROM Map
+                    INNER JOIN MapIsType ON Map.id = MapIsType.map_id
+                    INNER JOIN MapType ON MapIsType.type_id = MapType.id
+                    WHERE Map.id = ?;`;
+    var result;
     db.serialize(function() {
         db.all(sql, function(err, rows) {
             if (err) {
                 console.log("Error: " + err.message);
             }
+            result = rows;
+            var counter = 1;
+            rows.forEach((element, index) => {
+                //console.log("index: " + index);
+                //console.log("counter: " + index);
+                result[index].type = [];
+                db.each(sqlTypes, element.id, function(err, row) {
+                    result[index].type.push(row);
+                }, () => {
+                    counter++;
+                    if (counter > result.length) {
+                        //console.log(result);
+                        res.json(result);
+                    }
+                });
+            });
             //console.log(JSON.stringify(rows));
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(rows));
+            //res.setHeader('Content-Type', 'application/json');
+            //res.send(JSON.stringify(rows));
             //res.json(rows);
         });
     });
     //db.close();
 });
-
-// Get all maps TESTT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// TODO: Get all images belonging to each map and return those images in the same json object
-app.get("/mapstest", (req, res) => {
-    var sql = "SELECT * FROM Map LIMIT 2";
+// Get all maps with their images
+app.get("/maps-images", (req, res) => {
+    var sql = `SELECT Map.id, Map.name, Map.type, Map.difficulty, Map.length, Map.progress,
+                Map.status, Map.releaseDate, Map.download, Map.description, Game.name AS game
+                FROM Map INNER JOIN Game ON Map.game = Game.id LIMIT 3`;
     let map_id = -1;
     var json = {};
     var jsonArray = [];
     var result = [];
+    var index;
+    var imageArr = [];
     console.log("hei..");
     db.serialize(function() {
-        db.each(sql, function(err, row) {
-            //result = rows;
-            var index = row.id - 1;
-            //let imageArr = [];
-            var imageArr = [];
-            jsonArray.push(row);
-            //jsonArray[index].images = imageArr;
-            map_id = row.id;/*
-            db.all("SELECT * FROM Image WHERE map_id = ?", map_id, function(err, rows) {
-                //result = rows;
-                console.log("map_id: " + row.id);
-                console.log(rows);
-                var index = row.id - 1;
-                console.log("index : " + index);
-                jsonArray[index]["images"] = rows;
-                //res.json(jsonArray);
-            });*/
-            db.each("SELECT * FROM Image WHERE map_id = ?", map_id, function(err, rowImage) {
-                //result = rows;
-                //console.log("map_id: " + rowImage.map_id);
-                //console.log(jsonArray[index]);
-                //console.log(rowImage);
-                //console.log("index : " + index);
-                jsonArray.push(rowImage);
-                imageArr.push(rowImage);
-                //row.images = rowImage;
-                //imageArr.push(rowImage);
-                //console.log(imageArr);
-                //res.json(jsonArray);
-            }, () => {
-
-                row.images = imageArr;
-                //console.log(row);
-                result.push(row);
-                console.log(result);
-                //jsonArray[index].images.push(imageArr)
+        db.all(sql, function(err, rows) {
+            result = rows;
+            console.log("Result length: " + result.length);
+            var counter = 1;
+            result.forEach((element, index) => {
+                console.log("index: " + index);
+                console.log("counter: " + index);
+                db.all("SELECT id, location FROM Image WHERE map_id = ?", element.id, function(err, rows) {
+                    result[index].images = rows;
+                    //console.log(element);
+                    counter++;
+                    if (counter > result.length) {
+                        console.log(result);
+                        res.json(result);
+                    }
+                });
             });
-        }, () => {
-            console.log(result);
-            //res.json(jsonArray);
-            res.json(result);
-            //res.setHeader('Content-Type', 'application/json');
-            //res.send(JSON.stringify(result));
         });
-        //console.log(result);
-        //result.forEach(function(element) {
-            //console.log(element);
-
-        //res.json(jsonArray);
-        //});
-
-    });/*
+    });
+});
+// Get all maps with their images and map types
+app.get("/maps-images-types", (req, res) => {
+    var sql = `SELECT Map.id, Map.name, Map.type, Map.difficulty, Map.length, Map.progress,
+                Map.status, Map.releaseDate, Map.download, Map.description, Game.name
+                FROM Map INNER JOIN Game ON Map.game = Game.id LIMIT 3`;
+    var sqlTypes = `SELECT MapType.name FROM Map
+                    INNER JOIN MapIsType ON Map.id = MapIsType.map_id
+                    INNER JOIN MapType ON MapIsType.type_id = MapType.id
+                    WHERE Map.id = ?;`;
+    let map_id = -1;
+    var json = {};
+    var jsonArray = [];
+    var result = [];
+    var index;
+    var imageArr = [];
+    console.log("hei..");
     db.serialize(function() {
-        result.forEach( (element) => {
-            db.all("SELECT * FROM Image WHERE map_id = ?", element.id, function(err, rows) {
-                //result = rows;
-                console.log(rows);
-                res.json(result);
+        db.all(sql, function(err, rows) {
+            result = rows;
+            console.log("Result length: " + result.length);
+            var counter = 1;
+            result.forEach((element, index) => {
+                console.log("index: " + index);
+                console.log("counter: " + index);
+                //result[index].type = [];
+                db.all("SELECT id, location FROM Image WHERE map_id = ?", element.id, function(err, rows) {
+                    result[index].images = rows;
+                    //console.log(element);
+                    db.all(sqlTypes, element.id, function(err, rows) {
+                        result[index].type = rows;
+                        counter++;
+                        if (counter > result.length) {
+                            console.log(result);
+                            res.json(result);
+                        }
+                    });
+                });
             });
         });
-
-    });*/
-    //console.log(result);
-    /*db.close(() => {
-        res.json(result);
-    });*/
-
+    });
 });
 
 // Get all maps that are released
@@ -171,12 +192,19 @@ app.put("/maps/:id", (req, res) => {
                 SET name = ?, game= ?, type = ?, length = ?,
                 difficulty = ?, progress = ?, releaseDate = ?, description = ?
                 WHERE id = ?`;
-    var params = [];
-    for (key in req.body) {
+    console.log(req.body);
+    var params = [req.body.name, req.body.gameId, "NULL", req.body.length, req.body.difficulty,
+    req.body.progress, req.body.releaseDate, req.body.description, req.params.id];
+    /*for (key in req.body) {
         params.push(req.body[key]);
     }
-    params.push(req.params.id);
+    params.push(req.params.id);*/
     console.log(params);
+    var types = [];
+    for (key in req.body.type) {
+        types.push(req.body.type[key].id);
+    }
+    console.log(types);
     db.serialize(function() {
         db.run(sql, params, function(err, rows) {
             if (err) {
@@ -187,6 +215,20 @@ app.put("/maps/:id", (req, res) => {
             //res.send(JSON.stringify(rows));
             res.json("Map updated!");
         });
+        db.run("DELETE FROM MapIsType WHERE map_id = ?", req.params.id, (err) => {
+            if (err) {
+                console.error(err.message);
+            }
+        });
+        for (key in req.body.type) {
+            types.push(req.body.type[key].id);
+            let type = req.body.type[key].id;
+            db.run("INSERT INTO MapIsType (map_id, type_id) VALUES (?, ?)", req.params.id, type, (err) => {
+                if (err) {
+                    console.error(err.message);
+                }
+            });
+        }
     });
 });
 // Get all images for a single map
@@ -411,6 +453,36 @@ app.delete("/contactMessages/:id", (req, res) => {
             } else {
                 res.send("Record with id " + req.params.id + " deleted.");
             }
+        });
+    });
+    //db.close();
+});
+
+// Get all map types
+app.get("/map-types", (req, res) => {
+    //var sql = "SELECT * FROM Map";
+    var sql = `SELECT * FROM MapType`;
+    db.serialize(function() {
+        db.all(sql, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            res.json(rows);
+        });
+    });
+    //db.close();
+});
+
+// Get all games
+app.get("/games", (req, res) => {
+    //var sql = "SELECT * FROM Map";
+    var sql = `SELECT * FROM Game`;
+    db.serialize(function() {
+        db.all(sql, function(err, rows) {
+            if (err) {
+                console.log("Error: " + err.message);
+            }
+            res.json(rows);
         });
     });
     //db.close();

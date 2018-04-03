@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EditMapForm from "./EditMapForm";
+import EditMapForm from "./editmap/EditMapForm";
 import moment from 'moment';
 
 class EditMap extends Component {
@@ -96,7 +96,7 @@ class EditMap extends Component {
         let maps = this.state.maps;
         maps[mapIndex] = this.state.mapEdit;
         console.log(maps[mapIndex].id);
-        let {id, status, download, ...data} = this.state.mapEdit;
+        let {id, game, status, download, ...data} = this.state.mapEdit;
         console.log(data);
 
         fetch(`/maps/${maps[mapIndex].id}`, {
@@ -120,7 +120,9 @@ class EditMap extends Component {
 
     handleUserInput(e) {
         const inputName = e.target.name;
-        const inputValue = e.target.value;
+        let inputValue = e.target.value;
+        if (inputName === "progress") { inputValue = parseInt(inputValue); }
+        console.log("Value: " + inputValue);
         this.setState(prevState => ({
             mapEdit: {
                 ...prevState.mapEdit,
@@ -208,8 +210,19 @@ class EditMap extends Component {
             }));
     }
 
+    handleSelectGame(e) {
+        console.log(e.target.value);
+        let selectedGame = parseInt(e.target.value);
+        this.setState(prevState => ({
+            mapEdit: {
+                ...prevState.mapEdit,
+                gameId: selectedGame
+            }
+        }));
+    }
+
     render() {
-        //console.log(this.state);
+        console.log(this.state.mapEdit);
         let selectedMap = this.state.mapEdit !== null ? this.state.mapEdit.id : null;
         return (
             <div className="map-edit-container">
@@ -259,6 +272,7 @@ class EditMap extends Component {
                         handleFileSelect={this.handleFileSelect.bind(this)}
                         handleFileSubmit={this.handleFileSubmit.bind(this)}
                         handleChangeDate={this.handleChangeDate.bind(this)}
+                        handleSelectGame={this.handleSelectGame.bind(this)}
                         fileValid={this.state.fileValid}
                     />
                 }

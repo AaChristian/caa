@@ -232,7 +232,7 @@ li:hover, .dropdown:hover .dropbtn {
 }
 
 /* line 1, ../sass/partials/_forms.scss */
-input[type=text], textarea {
+input[type=text], textarea, select {
   padding: 10px;
   margin: 0;
   resize: vertical;
@@ -502,8 +502,18 @@ input[type=submit]:hover {
   width: 75%;
   float: left;
 }
+/* line 74, ../sass/partials/_editmap.scss */
+.map-edit-form-container .map-edit-left-container, .map-edit-form-container .map-edit-right-container {
+  width: 50%;
+  float: left;
+  padding: 15px;
+}
+/* line 79, ../sass/partials/_editmap.scss */
+.map-edit-form-container .map-edit-bottom-container {
+  padding: 15px;
+}
 
-/* line 76, ../sass/partials/_editmap.scss */
+/* line 83, ../sass/partials/_editmap.scss */
 .map-edit-label {
   margin: 5px 0;
   padding-top: 5px;
@@ -511,27 +521,31 @@ input[type=submit]:hover {
   height: 100%;
 }
 
-/* line 83, ../sass/partials/_editmap.scss */
+/* line 90, ../sass/partials/_editmap.scss */
 .map-edit-form-general {
   background-color: lightgray;
   text-align: left;
-  padding: 15px;
+  padding: 0px;
 }
-/* line 87, ../sass/partials/_editmap.scss */
+/* line 94, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=text] {
-  width: 50%;
+  width: 100%;
 }
-/* line 90, ../sass/partials/_editmap.scss */
+/* line 97, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=submit], .map-edit-form-general button {
   float: right;
   margin-left: 5px;
 }
-/* line 94, ../sass/partials/_editmap.scss */
+/* line 101, ../sass/partials/_editmap.scss */
 .map-edit-form-general textarea {
   width: 100%;
   height: 100px;
 }
-/* line 98, ../sass/partials/_editmap.scss */
+/* line 105, ../sass/partials/_editmap.scss */
+.map-edit-form-general select {
+  width: 100%;
+}
+/* line 108, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range] {
   -webkit-appearance: none;
   appearance: none;
@@ -544,11 +558,11 @@ input[type=submit]:hover {
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
 }
-/* line 109, ../sass/partials/_editmap.scss */
+/* line 119, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range]:hover {
   opacity: 1;
 }
-/* line 112, ../sass/partials/_editmap.scss */
+/* line 122, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   /* Override default look */
@@ -563,7 +577,7 @@ input[type=submit]:hover {
   /* Cursor on hover */
   border-radius: 5px;
 }
-/* line 121, ../sass/partials/_editmap.scss */
+/* line 131, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range]::-moz-range-thumb {
   width: 20px;
   /* Set a specific slider handle width */
@@ -574,33 +588,39 @@ input[type=submit]:hover {
   cursor: pointer;
   /* Cursor on hover */
 }
-/* line 127, ../sass/partials/_editmap.scss */
+/* line 137, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range]::-ms-fill-lower {
   background: green;
 }
-/* line 130, ../sass/partials/_editmap.scss */
+/* line 140, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range]::-moz-range-progress {
   background: green;
 }
-/* line 133, ../sass/partials/_editmap.scss */
+/* line 143, ../sass/partials/_editmap.scss */
 .map-edit-form-general input[type=range]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* line 140, ../sass/partials/_editmap.scss */
+/* line 149, ../sass/partials/_editmap.scss */
+.select-map-types {
+  width: 50%;
+  height: 100px;
+}
+
+/* line 154, ../sass/partials/_editmap.scss */
 .map-edit-submit:disabled {
   cursor: not-allowed;
   background-color: #adabab;
 }
 
-/* line 146, ../sass/partials/_editmap.scss */
+/* line 160, ../sass/partials/_editmap.scss */
 .map-edit-form-images {
   background-color: orange;
   padding: 10px;
 }
 
-/* line 154, ../sass/partials/_editmap.scss */
+/* line 168, ../sass/partials/_editmap.scss */
 .map-current-single-image {
   position: relative;
   width: 260px;
@@ -608,13 +628,13 @@ input[type=submit]:hover {
   float: left;
   margin: 5px;
 }
-/* line 160, ../sass/partials/_editmap.scss */
+/* line 174, ../sass/partials/_editmap.scss */
 .map-current-single-image img {
   width: 260px;
   height: 180px;
   display: block;
 }
-/* line 165, ../sass/partials/_editmap.scss */
+/* line 179, ../sass/partials/_editmap.scss */
 .map-current-single-image .map-edit-image-del {
   position: absolute;
   top: 8px;
@@ -623,7 +643,7 @@ input[type=submit]:hover {
   font-size: 1.6em;
   font-weight: bold;
 }
-/* line 172, ../sass/partials/_editmap.scss */
+/* line 186, ../sass/partials/_editmap.scss */
 .map-current-single-image .map-edit-image-del:hover, .map-current-single-image .map-edit-image-del.focus {
   color: red;
   text-decoration: none;
