@@ -18,7 +18,7 @@ class MapEditFormRight extends Component {
                   <textarea
                       name="description" value={map.description}
                       onChange={this.props.handleUserInput}/>
-              <div>
+              <div className="map-edit-btns-container">
                   <input
                       type="submit" name="submit" className="map-edit-submit"
                       value="Submit" onClick={this.props.handleSubmitChanges}/>

@@ -12,7 +12,8 @@ class EditMap extends Component {
             mapEditImages: [],
             selectedFile: null,
             fileValid: false,
-            filterMaps: "all"
+            filterMaps: "all",
+            selectedTypes: []
         }
     }
 
@@ -219,6 +220,10 @@ class EditMap extends Component {
                 gameId: selectedGame
             }
         }));
+    }
+
+    handleAddType() {
+        
     }
 
     render() {

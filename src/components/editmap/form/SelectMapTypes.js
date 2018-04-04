@@ -18,18 +18,39 @@ class SelectMapTypes extends Component {
             }));
     }
 
+    handleAddType() {
+        console.log("Add type ");
+    }
+
     render() {
-        //console.log(this.props);
         return (
-          <select className="select-map-types" onChange={this.props.handleUserInput} multiple>
-              {this.state.types.map(type =>
-                  <option
-                      key={type.id} value={type.name}
-                      selected={this.props.currentType.includes(type.name)}>
-                      {type.name}
-                  </option>
-              )}
-          </select>
+            <div className="select-map-types-container">
+                <div className="select-map-types">
+                    <select className="all-types" onChange={this.props.handleUserInput} multiple>
+                        {this.state.types.map(type =>
+                            <option
+                                key={type.id} value={type.id}
+                                selected={this.props.currentTypes.includes(type.id)}>
+                                {type.name}
+                            </option>
+                        )}
+                    </select>
+                </div>
+                <div className="select-map-buttons">
+                    <button onClick={(e) => this.handleAddType(this)}>&gt;</button>
+                    <button>&lt;</button>
+                </div>
+                <div className="select-map-types">
+                    <select className="selected-types" onChange={this.props.handleUserInput} multiple>
+                        {this.props.currentTypes.map(type =>
+                            <option key={type.id} value={type.id}>
+                                {type.name}
+                            </option>
+                        )}
+                    </select>
+                </div>
+                <div className="clear-fix"></div>
+	  		</div>
         );
     }
 }

@@ -86,6 +86,12 @@
     width: 30%;
     height: 100%;
 }
+.map-edit-btns-container {
+    button {
+        float: right;
+        margin-left: 5px;
+    }
+}
 
 .map-edit-form-general {
     background-color: lightgray;
@@ -94,7 +100,7 @@
     input[type=text] {
         width: 100%;
     }
-    input[type=submit], button {
+    input[type=submit] {
         float: right;
         margin-left: 5px;
     }
@@ -146,10 +152,6 @@
         }
     }
 }
-.select-map-types {
-    width: 50%;
-    height: 100px;
-}
 .map-edit-submit {
     &:disabled {
         cursor: not-allowed;
@@ -188,5 +190,19 @@ $mapImageHeight: 180px;
             text-decoration: none;
             cursor: pointer;
         }
+    }
+}
+
+.select-map-types {
+    width: 45%;
+    height: 100px;
+    float: left;
+}
+.select-map-buttons {
+    width: 10%;
+    float: left;
+    button {
+        //float: none;
+        width: 100%;
     }
 }
