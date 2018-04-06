@@ -22,7 +22,7 @@ class SelectGames extends Component {
             }));
         let games = this.state.games;
         for (var i = 0; i < games.length; i++) {
-            if (games[i].name == currentGame) {
+            if (games[i].name === currentGame) {
                 console.log(games[i].name);
                 break;
             }

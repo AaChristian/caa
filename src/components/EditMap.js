@@ -122,7 +122,7 @@ class EditMap extends Component {
     handleUserInput(e) {
         const inputName = e.target.name;
         let inputValue = e.target.value;
-        if (inputName === "progress") { inputValue = parseInt(inputValue); }
+        if (inputName === "progress") { inputValue = parseInt(inputValue, 10); }
         console.log("Value: " + inputValue);
         this.setState(prevState => ({
             mapEdit: {
@@ -213,7 +213,7 @@ class EditMap extends Component {
 
     handleSelectGame(e) {
         console.log(e.target.value);
-        let selectedGame = parseInt(e.target.value);
+        let selectedGame = parseInt(e.target.value, 10);
         this.setState(prevState => ({
             mapEdit: {
                 ...prevState.mapEdit,
@@ -223,7 +223,7 @@ class EditMap extends Component {
     }
 
     handleAddType() {
-        
+
     }
 
     render() {
