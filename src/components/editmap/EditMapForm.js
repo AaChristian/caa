@@ -18,6 +18,7 @@ class EditMapForm extends Component {
                         map={map}
                         handleUserInput={this.props.handleUserInput}
                         handleSelectGame={this.props.handleSelectGame}
+                        handleAddType={this.props.handleAddType}
                      />
                     <MapEditFormRight map={map} handleUserInput={this.props.handleUserInput} />
                     <MapEditFormBottom

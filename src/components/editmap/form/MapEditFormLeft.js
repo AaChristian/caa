@@ -24,9 +24,11 @@ class MapEditFormLeft extends Component {
               <div className="map-edit-label">Type</div>
               <div>
                   <SelectMapTypes
-                      currentTypes={map.type} 
+                      currentTypes={map.type}
                       handleSelectTypes={this.props.handleSelectTypes}
-                      handleUserInput={this.props.handleUserInput} />
+                      handleUserInput={this.props.handleUserInput}
+                      handleAddType={this.props.handleAddType}
+                  />
               </div>
           </div>
         );

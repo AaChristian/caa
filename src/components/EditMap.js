@@ -18,18 +18,11 @@ class EditMap extends Component {
     }
 
     componentDidMount() {
-
-        fetch("/maps")
-            .then(res => res.json())
-            .then(maps => this.setState({maps}, () => {
-                console.log("Maps fetched..", maps);
-                //console.log(this.state.maps[2]);
-            }));
-            //this.getMaps();
+        this.getMaps("all");
     }
 
-    getMaps() {
-        let filter = this.state.filterMaps;
+    getMaps(filter) {
+        //let filter = this.state.filterMaps;
         let url = "/maps";
         url += filter === "all" ? "" : "/" + filter;
         fetch(url)
@@ -195,20 +188,8 @@ class EditMap extends Component {
     }
 
     handleMapFilter(filter) {
-        console.log(filter);
-        /*this.setState({
-            filterMaps: filter
-        }, this.getMaps());*/;
-        let url = "/maps";
-        url += filter === "all" ? "" : "/" + filter;
-        fetch(url)
-            .then(res => res.json())
-            .then(maps => this.setState({
-                maps, filterMaps: filter
-            }, () => {
-                console.log("Maps fetched..", maps);
-                //console.log(this.state.maps[2]);
-            }));
+        console.log("Selected: " + filter);
+        this.getMaps(filter);
     }
 
     handleSelectGame(e) {
@@ -222,12 +203,19 @@ class EditMap extends Component {
         }));
     }
 
-    handleAddType() {
-
+    handleAddType(type) {
+        console.log("Gonna add types to current list..", this.state.selectedTypes);
+        let types = this.state.mapEdit
+        /*this.setState(prevState => ({
+            mapEdit: {
+                ...prevState.mapEdit,
+                type: moment(date).format("YYYY-MM-DD")
+            }
+        }));*/
     }
 
     render() {
-        console.log(this.state.mapEdit);
+        //console.log(this.state.mapEdit);
         let selectedMap = this.state.mapEdit !== null ? this.state.mapEdit.id : null;
         return (
             <div className="map-edit-container">
@@ -278,6 +266,7 @@ class EditMap extends Component {
                         handleFileSubmit={this.handleFileSubmit.bind(this)}
                         handleChangeDate={this.handleChangeDate.bind(this)}
                         handleSelectGame={this.handleSelectGame.bind(this)}
+                        handleAddType={this.handleAddType.bind(this)}
                         fileValid={this.state.fileValid}
                     />
                 }

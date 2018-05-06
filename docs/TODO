@@ -1,0 +1,44 @@
+Ctrl+Enter to create new todo
+Ctrl+Shift+S to add/update timestamp to todo
+Ctr+D to complete todo
+
+General:
+    ☐ Add map page  @timestamp(2018-05-05 02:58)
+        Use the same form as the edit map page, but obviously send a POST HTTP request instead to the REST API
+
+    ☐ Add ability to add changelogs to maps  @timestamp(2018-05-05 03:30)
+        ☐ Create new table in the databaseto store changelogs  @timestamp(2018-05-05 03:31)
+            Possible attributes could be
+                id
+                type (fix, new etc)
+                description
+                timestamp
+                ..
+        ☐ Create new tablelinking changelogs and maps  @timestamp(2018-05-05 03:32)
+Home:
+    ☐ Write summary about my education  @timestamp(2018-05-05 03:13)
+
+Map Edit Page:
+    ☐ Fix CSS on the Map edit page @timestamp(2018-05-05 02:10)
+    ☐ Add ability to change map type  @timestamp(2018-05-05 02:51)
+        ☐ Add so that you can add or remove types in the dual list  @timestamp(2018-05-05 04:37)
+    ✔ Fix crash when selecting map when under "Released" or "Unreleased" tab  @timestamp(2018-05-05 03:07) @done(2018-05-05 06:24) @project(Map Edit Page)
+        TypeError: this.props.currentTypes.map is not a function
+        C:/webserver/caa/src/components/editmap/form/SelectMapTypes.js line 45
+
+        Try changing the database so that a map can have multiple map types.
+
+    ☐ Figure out a way to select or write length  @timestamp(2018-05-05 03:27)
+        For example 1 minute, 5 minutes etc. Maybe use a slider? Or just a input only allowing integers >= 1
+    Image:
+        ☐ Change delete image icon  @timestamp(2018-05-05 02:54)
+            Currently its just a red X
+
+Database:
+    ☐ @Low Change so that a map can have multiple difficulties  @timestamp(2018-05-05 03:22)
+        Be able to set difficulty to Easy/Hard, or Easy-hard etc
+        This could be done by having a seperate table with allpossible difficulties (e.g. Easy, Average)
+
+
+REST API:
+    ☐ Clean up routes/maps.js, manye of the routes use the same code. Create functions..  @timestamp(2018-05-06 09:27)

@@ -114,32 +114,72 @@ module.exports = (app, db) => {
 
     // Get all maps that are released
     app.get("/maps/released", (req, res) => {
-        var sql = "SELECT * FROM Map WHERE status = 'Released'";
+        var sql = `SELECT Map.id, Map.name, Game.id AS gameId, Game.name AS game, Map.type,
+                    Map.difficulty, Map.length, Map.progress, Map.status, Map.releaseDate,
+                    Map.download, Map.description
+                    FROM Map INNER JOIN Game ON Map.game = Game.id WHERE status = 'Released'` ;
+        var sqlTypes = `SELECT MapType.id, MapType.name FROM Map
+                        INNER JOIN MapIsType ON Map.id = MapIsType.map_id
+                        INNER JOIN MapType ON MapIsType.type_id = MapType.id
+                        WHERE Map.id = ?;`;
+        var result;
         db.serialize(function() {
             db.all(sql, function(err, rows) {
                 if (err) {
                     console.log("Error: " + err.message);
                 }
-                //console.log(JSON.stringify(rows));
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(rows));
-                //res.json(rows);
+                result = rows;
+                var counter = 1;
+                // Get types for each returned row
+                rows.forEach((element, index) => {
+                    result[index].type = [];
+                    db.each(sqlTypes, element.id, function(err, row) {
+                        result[index].type.push(row);
+                    }, () => {
+                        counter++;
+                        // If all returned rows (maps) processed, return json result
+                        if (counter > result.length) {
+                            //console.log(result);
+                            res.json(result);
+                        }
+                    });
+                });
             });
         });
         //db.close();
     });
     // Get all maps that are released
     app.get("/maps/unreleased", (req, res) => {
-        var sql = "SELECT * FROM Map WHERE status != 'Released'";
+        var sql = `SELECT Map.id, Map.name, Game.id AS gameId, Game.name AS game, Map.type,
+                    Map.difficulty, Map.length, Map.progress, Map.status, Map.releaseDate,
+                    Map.download, Map.description
+                    FROM Map INNER JOIN Game ON Map.game = Game.id WHERE status != 'Released'` ;
+        var sqlTypes = `SELECT MapType.id, MapType.name FROM Map
+                        INNER JOIN MapIsType ON Map.id = MapIsType.map_id
+                        INNER JOIN MapType ON MapIsType.type_id = MapType.id
+                        WHERE Map.id = ?;`;
+        var result;
         db.serialize(function() {
             db.all(sql, function(err, rows) {
                 if (err) {
                     console.log("Error: " + err.message);
                 }
-                //console.log(JSON.stringify(rows));
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(rows));
-                //res.json(rows);
+                result = rows;
+                var counter = 1;
+                // Get types for each returned row
+                rows.forEach((element, index) => {
+                    result[index].type = [];
+                    db.each(sqlTypes, element.id, function(err, row) {
+                        result[index].type.push(row);
+                    }, () => {
+                        counter++;
+                        // If all returned rows (maps) processed, return json result
+                        if (counter > result.length) {
+                            //console.log(result);
+                            res.json(result);
+                        }
+                    });
+                });
             });
         });
         //db.close();
