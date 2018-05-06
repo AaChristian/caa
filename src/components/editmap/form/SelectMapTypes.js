@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import FormSelectOption from "./FormSelectOption";
 
 class SelectMapTypes extends Component {
     constructor() {
         super();
         this.state = {
             types: [],
-            selectedTypes: []
+            //selectedTypes: []
         }
     }
 
@@ -22,22 +23,48 @@ class SelectMapTypes extends Component {
         console.log("Add type ");
     }
 
+    isCurrentType(id) {
+        for(var i = 0; i < this.props.currentTypes.length; i++) {
+            if (this.props.currentTypes[i].id === id) {
+                console.log("Type id " + id + " ( " + this.props.currentTypes[i].name + " ) is a current type!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getOption(type) {
+        return (
+            <option
+                key={type.id} value={type.id}>
+                {type.name}
+            </option>
+        );
+    }
+
     render() {
+        //console.log("All types: ", this.state.types);
+        //console.log("Current types: ", this.props.currentTypes);
         return (
             <div className="select-map-types-container">
                 <div className="select-map-types">
                     <select className="all-types" onChange={this.props.handleUserInput} multiple>
-                        {this.state.types.map(type =>
-                            <option
-                                key={type.id} value={type.id}
-                                selected={this.props.currentTypes.includes(type.id)}>
-                                {type.name}
-                            </option>
-                        )}
+                        {this.state.types.map(type => {
+                            if (!this.isCurrentType(type.id)) {
+                                return (
+                                    <option
+                                        key={type.id} value={type.id}>
+                                        {type.name}
+                                    </option>
+                                )
+                            } else {
+                                return null;
+                            }
+                        })}
                     </select>
                 </div>
                 <div className="select-map-buttons">
-                    <button onClick={(e) => this.handleAddType(this)}>&gt;</button>
+                    <button onClick={this.props.handleAddType}>&gt;</button>
                     <button>&lt;</button>
                 </div>
                 <div className="select-map-types">
