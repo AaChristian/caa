@@ -52,6 +52,7 @@ class EditMap extends Component {
                 }
             }
         }
+        console.log("Selected map:", this.state.maps[mapIndex]);
         this.setState({
             mapIndex: mapIndex,
             mapEdit: this.state.maps[mapIndex],
@@ -203,9 +204,20 @@ class EditMap extends Component {
         }));
     }
 
-    handleAddType(type) {
-        console.log("Gonna add types to current list..", this.state.selectedTypes);
-        let types = this.state.mapEdit
+    handleAddType(types) {
+        console.log("Gonna add these types to current list..", types);
+        let currentTypes = this.state.mapEdit.type
+        console.log("currentTypes: ", currentTypes);
+        for (let i = 0; i < currentTypes.length; i++) {
+            for (let j = 0; j < types.length; j++) {
+                if (currentTypes[i].id !== parseInt(types[j], 10)) {
+                    console.log(currentTypes[i].id + " !== " + parseInt(types[j], 10));
+                    
+                    //selectedAvailableTypes.push(option.value);
+                }
+            }
+        }
+
         /*this.setState(prevState => ({
             mapEdit: {
                 ...prevState.mapEdit,

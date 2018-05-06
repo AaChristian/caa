@@ -1,47 +1,38 @@
 module.exports = (app, db) => {
     // Get all maps with types
     app.get("/maps", (req, res) => {
-        //var sql = "SELECT * FROM Map";
-        var sql = `SELECT Map.id, Map.name, Game.id AS gameId, Game.name AS game, Map.type,
-                    Map.difficulty, Map.length, Map.progress, Map.status, Map.releaseDate,
-                    Map.download, Map.description
-                    FROM Map INNER JOIN Game ON Map.game = Game.id`;
-        var sqlTypes = `SELECT MapType.id, MapType.name FROM Map
-                        INNER JOIN MapIsType ON Map.id = MapIsType.map_id
-                        INNER JOIN MapType ON MapIsType.type_id = MapType.id
-                        WHERE Map.id = ?;`;
-        var result;
+        getMaps(req, res, "all");
+    });
+    // Get all maps that are released
+    app.get("/maps/released", (req, res) => {
+        getMaps(req, res, "released");
+    });
+    // Get all maps that are NOT released
+    app.get("/maps/unreleased", (req, res) => {
+        getMaps(req, res, "unreleased");
+    });
+    // Get single map
+    // TODO: Get the map types as well. Maybe use the getMaps method..
+    app.get("/maps/:id", (req, res) => {
+        var sql = "SELECT * FROM Map WHERE id = ?";
         db.serialize(function() {
-            db.all(sql, function(err, rows) {
+            db.get(sql, req.params.id, function(err, rows) {
                 if (err) {
                     console.log("Error: " + err.message);
+                    res.status(500);
+                    res.send("Error..");
                 }
-                result = rows;
-                var counter = 1;
-                // Get types for each returned row
-                rows.forEach((element, index) => {
-                    result[index].type = [];
-                    db.each(sqlTypes, element.id, function(err, row) {
-                        result[index].type.push(row);
-                    }, () => {
-                        counter++;
-                        // If all returned rows (maps) processed, return json result
-                        if (counter > result.length) {
-                            //console.log(result);
-                            res.json(result);
-                        }
-                    });
-                });
+                //res.send(rows);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(rows));
+                //res.json(rows);
             });
         });
-        //db.close();
     });
 
     // Get all maps with their images
     app.get("/maps-images", (req, res) => {
-        var sql = `SELECT Map.id, Map.name, Map.type, Map.difficulty, Map.length, Map.progress,
-                    Map.status, Map.releaseDate, Map.download, Map.description, Game.name AS game
-                    FROM Map INNER JOIN Game ON Map.game = Game.id LIMIT 3`;
+        var sql = `SELECT Map.id, Map.name FROM Map INNER JOIN Game ON Map.game = Game.id LIMIT 3`;
         let map_id = -1;
         var json = {};
         var jsonArray = [];
@@ -112,12 +103,18 @@ module.exports = (app, db) => {
         });
     });
 
-    // Get all maps that are released
-    app.get("/maps/released", (req, res) => {
+    // Get either all maps or only released or unreleased maps
+    getMaps = (req, res, filter) => {
+        var sqlFilter = "";
+        switch (filter) {
+            case "released": sqlFilter = " WHERE status = 'Released'"; break;
+            case "unreleased": sqlFilter = " WHERE status != 'Released'"; break;
+            case "all": break;
+        }
         var sql = `SELECT Map.id, Map.name, Game.id AS gameId, Game.name AS game, Map.type,
                     Map.difficulty, Map.length, Map.progress, Map.status, Map.releaseDate,
                     Map.download, Map.description
-                    FROM Map INNER JOIN Game ON Map.game = Game.id WHERE status = 'Released'` ;
+                    FROM Map INNER JOIN Game ON Map.game = Game.id ` + sqlFilter;
         var sqlTypes = `SELECT MapType.id, MapType.name FROM Map
                         INNER JOIN MapIsType ON Map.id = MapIsType.map_id
                         INNER JOIN MapType ON MapIsType.type_id = MapType.id
@@ -147,60 +144,32 @@ module.exports = (app, db) => {
             });
         });
         //db.close();
-    });
-    // Get all maps that are released
-    app.get("/maps/unreleased", (req, res) => {
-        var sql = `SELECT Map.id, Map.name, Game.id AS gameId, Game.name AS game, Map.type,
-                    Map.difficulty, Map.length, Map.progress, Map.status, Map.releaseDate,
-                    Map.download, Map.description
-                    FROM Map INNER JOIN Game ON Map.game = Game.id WHERE status != 'Released'` ;
-        var sqlTypes = `SELECT MapType.id, MapType.name FROM Map
-                        INNER JOIN MapIsType ON Map.id = MapIsType.map_id
-                        INNER JOIN MapType ON MapIsType.type_id = MapType.id
-                        WHERE Map.id = ?;`;
-        var result;
+    }
+
+/*
+    app.post("/maps/:id/types", () => {
+        var sql = `INSERT INTO OR IGNORE MapIsType
+                    (map_id, type_id) VALUES (?, ?)`;
+        console.log(req.body);
         db.serialize(function() {
-            db.all(sql, function(err, rows) {
-                if (err) {
-                    console.log("Error: " + err.message);
-                }
-                result = rows;
-                var counter = 1;
-                // Get types for each returned row
-                rows.forEach((element, index) => {
-                    result[index].type = [];
-                    db.each(sqlTypes, element.id, function(err, row) {
-                        result[index].type.push(row);
-                    }, () => {
-                        counter++;
-                        // If all returned rows (maps) processed, return json result
-                        if (counter > result.length) {
-                            //console.log(result);
-                            res.json(result);
-                        }
-                    });
-                });
-            });
-        });
-        //db.close();
-    });
-    // Get single map
-    app.get("/maps/:id", (req, res) => {
-        var sql = "SELECT * FROM Map WHERE id = ?";
-        db.serialize(function() {
-            db.get(sql, req.params.id, function(err, rows) {
+            db.run(sql, req.file.filename, req.body.mapId, function(err) {
                 if (err) {
                     console.log("Error: " + err.message);
                     res.status(500);
                     res.send("Error..");
+                } else {
+                    //res.send(rows);
+                    json.id = this.lastID;
+                    json.location = req.file.filename;
+                    json.map_id = req.body.mapId;
+                    console.log(json);
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(json);
                 }
-                //res.send(rows);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(rows));
-                //res.json(rows);
             });
         });
-    });
+    });*/
+
     // Update single map
     app.put("/maps/:id", (req, res) => {
         var sql = `UPDATE Map

@@ -6,7 +6,7 @@ class SelectMapTypes extends Component {
         super();
         this.state = {
             types: [],
-            //selectedTypes: []
+            selectedAvailableTypes: []
         }
     }
 
@@ -17,6 +17,22 @@ class SelectMapTypes extends Component {
                 //console.log("Types fetched..", types);
                 //console.log(this.state.maps[2]);
             }));
+    }
+
+    handleSelectOption(e) {
+        let select = e.target;
+        let selectedAvailableTypes = [];
+        // Get all selected options in the select box
+        [...select.options].filter(option => option.selected).map(option => {
+            console.log("Selected value: " + option.target);
+            if (selectedAvailableTypes.indexOf(option.value) === -1) {
+                selectedAvailableTypes.push(option.value);
+            }
+            this.setState({
+                selectedAvailableTypes
+            });
+
+        });
     }
 
     handleAddType() {
@@ -45,10 +61,11 @@ class SelectMapTypes extends Component {
     render() {
         //console.log("All types: ", this.state.types);
         //console.log("Current types: ", this.props.currentTypes);
+        console.log("Selected types: ", this.state.selectedAvailableTypes);
         return (
             <div className="select-map-types-container">
                 <div className="select-map-types">
-                    <select className="all-types" onChange={this.props.handleUserInput} multiple>
+                    <select className="all-types" onChange={this.handleSelectOption.bind(this)} multiple>
                         {this.state.types.map(type => {
                             if (!this.isCurrentType(type.id)) {
                                 return (
@@ -64,7 +81,9 @@ class SelectMapTypes extends Component {
                     </select>
                 </div>
                 <div className="select-map-buttons">
-                    <button onClick={this.props.handleAddType}>&gt;</button>
+                    <button onClick={() => this.props.handleAddType(this.state.selectedAvailableTypes)}
+                        disabled={this.state.selectedAvailableTypes.length == 0}
+                        >&gt;</button>
                     <button>&lt;</button>
                 </div>
                 <div className="select-map-types">
