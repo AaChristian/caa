@@ -13,7 +13,7 @@ class EditMap extends Component {
             selectedFile: null,
             fileValid: false,
             filterMaps: "all",
-            selectedTypes: []
+            //selectedTypes: []
         }
     }
 
@@ -205,15 +205,29 @@ class EditMap extends Component {
     }
 
     handleAddType(types) {
+        console.log("mapEdit: ", this.state.mapEdit);
         console.log("Gonna add these types to current list..", types);
+        console.log("currentTypes before: " , this.state.mapEdit.type);
         let currentTypes = this.state.mapEdit.type
-        console.log("currentTypes: ", currentTypes);
         for (let i = 0; i < currentTypes.length; i++) {
+            console.log("currentTypes[" + i + "] " + typeof(currentTypes[i]));
+            if (currentTypes[i] === undefined) {
+                continue;
+            }
             for (let j = 0; j < types.length; j++) {
-                if (currentTypes[i].id !== parseInt(types[j], 10)) {
-                    console.log(currentTypes[i].id + " !== " + parseInt(types[j], 10));
-                    
-                    //selectedAvailableTypes.push(option.value);
+                console.log("types[" + j + "]" + typeof(types[j]));
+                if (currentTypes[i].id !== types[j].id) {
+                    console.log(currentTypes[i].id + " !== " + types[j].id);
+                    console.log("currentTypes after: " , currentTypes);
+                    //console.log(types[j]);
+                    currentTypes.push(types[i]);
+                    this.setState(prevState => ({
+                        mapEdit: {
+                            ...prevState.mapEdit,
+                            type: currentTypes
+                        }
+                    }));
+                    break;
                 }
             }
         }
